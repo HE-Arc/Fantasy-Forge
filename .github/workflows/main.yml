@@ -15,7 +15,7 @@ jobs:
     - name: installing dependencies and setup
       run: |
         cd /home/django/project/Fantasy-Forge
-        pipenv shell
+        pipenv run
         python manage.py migrate
         npm install
         npm run build
