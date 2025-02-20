@@ -1,0 +1,21 @@
+name: deployment
+on:
+  push:
+    branches: [main]
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+    - name: git pull
+      run: |
+        cd /home/django/project/Fantasy-Forge
+        git fetch --all
+        git checkout main
+        git pull --all
+    - name: installing dependencies and setup
+      run: |
+        cd /home/django/project/Fantasy-Forge
+        pipenv shell
+        python manage.py migrate
+        npm install
+        npm run build
