@@ -25,5 +25,6 @@ router = DefaultRouter()
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("api/", include("fantasyforgeapp.urls")),
     path("", include(router.urls)),
 ]

@@ -21,7 +21,7 @@ const router = createRouter({
     {
       path: '/characters',
       name: 'characters',
-      component: () => import('../views/Test.vue'), // TODO: Change to CharactersView
+      component: () => import('../views/CharachtersView.vue'),
     }
   ],
 })

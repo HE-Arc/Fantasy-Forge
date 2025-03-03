@@ -18,7 +18,6 @@ onMounted(() => {
 </script>
 <template>
   <div>
-    <h1>Characters</h1>
     <ul>
       <li v-for="character in characters" :key="character.id">
         {{ character.name }}

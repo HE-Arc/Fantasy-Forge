@@ -15,7 +15,7 @@ import { ref } from 'vue'
             </router-link>
           </li>
           <li>
-            <router-link :to="{ name: 'home' }" class="text-gray-900 dark:text-gray-100 inline-block py-2 px-4 text-sm font-medium">
+            <router-link :to="{ name: 'characters' }" class="text-gray-900 dark:text-gray-100 inline-block py-2 px-4 text-sm font-medium">
               Characters
             </router-link>
           </li>
