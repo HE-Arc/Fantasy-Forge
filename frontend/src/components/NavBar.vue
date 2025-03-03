@@ -10,8 +10,8 @@ import { ref } from 'vue'
         <ul class="flex justify-center items-center space-x-8 h-full">
           <li>
             <router-link :to="{ name: 'home' }">
-                <img src="@/assets/logo-app.svg" alt="App Logo" class="h-9 w-auto block dark:hidden" />
-                <img src="@/assets/logo-app-dark.svg" alt="App Logo Dark" class="h-9 w-auto hidden dark:block" />
+                <img src="@/assets/logo-app.svg" alt="App Logo" class="h-12 w-auto block dark:hidden" />
+                <img src="@/assets/logo-app-dark.svg" alt="App Logo Dark" class="h-12 w-auto hidden dark:block" />
             </router-link>
           </li>
           <li>
