@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-+qz#9yx_m(fovghs=hxccwy(8&9zox(%jbwjq84@5@i(zo=i$#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["https://fantasy-forge.k8s.ing.he-arc.ch"]
 
 
 # Application definition
@@ -132,6 +132,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
+    'https://fantasy-forge.k8s.ing.he-arc.ch',
 ]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
