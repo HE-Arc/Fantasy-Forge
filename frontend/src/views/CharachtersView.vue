@@ -5,7 +5,7 @@ const characters = ref([]);
 
 const fetchCharacters = async () => {
   try {
-    const res = await axios.get("https://api-fantasy-forge.k8s.ing.he-arc.ch/api/characters/", { withCredentials: true });
+    const res = await axios.get("/api/characters/");
     characters.value = res.data;
   } catch (error) {
     console.error("Error fetching characters:", error);

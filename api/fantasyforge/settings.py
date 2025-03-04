@@ -24,9 +24,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-+qz#9yx_m(fovghs=hxccwy(8&9zox(%jbwjq84@5@i(zo=i$#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["https://fantasy-forge.k8s.ing.he-arc.ch"]
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "https://fantasy-forge.k8s.ing.he-arc.ch",
+    ]
 
 
 # Application definition
