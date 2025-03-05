@@ -23,7 +23,8 @@ import { ref } from 'vue'
             </router-link>
           </li>
           <li>
-            <router-link :to="{ name: 'login' }" class="text-gray-400 dark:text-gray-100 inline-block py-2 px-4 text-sm font-medium">
+            <!-- TODO if logged in - log out -->
+            <router-link :to="{ name: 'login' }" class="text-gray-400 dark:text-white-400 inline-block py-2 px-4 text-sm font-medium">
               Login
             </router-link>
           </li>

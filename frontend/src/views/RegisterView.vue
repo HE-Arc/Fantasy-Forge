@@ -39,7 +39,7 @@ async function handleRegister() {
           <input class="ff-input" v-model="password2" type="password" placeholder="Confirm Password" required />
         </div>
         <div class = "py-3">
-            <button class="bg-red-500 text-white px-4 py-2 rounded " type="submit">Register</button>
+            <button class="ff-button" type="submit">Register</button>
           </div>
         </form>
       </div>

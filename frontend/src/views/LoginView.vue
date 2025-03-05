@@ -34,7 +34,7 @@ async function handleLogin() {
             <!-- Password -->
             <input class="ff-input" v-model="password" type="password" placeholder="Password" required />
           </div>
-            <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">Login</button>
+            <button type="submit" class="ff-button">Login</button>
             <a class="text-red px-4 py-2 rounded" href="register">No account? Register</a>
         </form>
 

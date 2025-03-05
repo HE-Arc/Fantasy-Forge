@@ -74,7 +74,7 @@ const submitForm = async () => {
     <h2>{{ isEdit ? 'Edit' : 'Create' }} Character</h2>
     <form @submit.prevent="submitForm">
       <input v-model="name" type="text" placeholder="Character Name" required />
-      <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">{{ isEdit ? 'Update' : 'Create' }} Character</button>
+      <button type="submit" class="ff-button">{{ isEdit ? 'Update' : 'Create' }} Character</button>
     </form>
 
     <p v-if="message">{{ message }}</p>
