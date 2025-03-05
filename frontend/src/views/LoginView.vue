@@ -21,7 +21,7 @@ async function handleLogin() {
 
 
 <template>
-    <div class="bg-gray-100 flex items-center justify-center  min-h-screen">
+    <div class="flex items-center justify-center  min-h-screen" style="background-color: var(--color-background-soft);">
 
         <div class="flex justify-center w-full max-w-xs">
          <form @submit.prevent="handleLogin" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -30,7 +30,7 @@ async function handleLogin() {
             <!-- Username -->
             <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" v-model="username" placeholder="Username" required />
           </div>
-          <div class="mb-6 py-5">
+          <div class="py-5">
             <!-- Password -->
             <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" v-model="password" type="password" placeholder="Password" required />
           </div>

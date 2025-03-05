@@ -59,7 +59,7 @@ const submitForm = async () => {
     <h2>{{ isEdit ? 'Edit' : 'Create' }} Character</h2>
     <form @submit.prevent="submitForm">
       <input v-model="name" type="text" placeholder="Character Name" required />
-      <button type="submit">{{ isEdit ? 'Update' : 'Create' }} Character</button>
+      <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">{{ isEdit ? 'Update' : 'Create' }} Character</button>
     </form>
 
     <p v-if="message">{{ message }}</p>
@@ -72,12 +72,5 @@ input {
   margin-right: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
-}
-button {
-  padding: 8px 12px;
-  background-color: blue;
-  color: white;
-  border: none;
-  cursor: pointer;
 }
 </style>
