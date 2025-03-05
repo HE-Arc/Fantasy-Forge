@@ -16,7 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.urls import include
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+# Add your viewsets to the router here, for example:
+# router.register(r'myviewset', views.MyViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("api/", include("fantasyforgeapp.urls")),
 ]
