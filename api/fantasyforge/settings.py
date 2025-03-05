@@ -32,8 +32,18 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "localhost",
     "api-fantasy-forge.k8s.ing.he-arc.ch",
+    "127.0.0.1"
     ]
 
+ALLOWED_METHODS = [
+    "*",
+    "GET",
+    "POST",
+    "PUT",
+    "DELETE",
+    "OPTIONS",
+    "HEAD",
+]
 
 # Application definition
 
@@ -46,6 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'fantasyforgeapp',
     'rest_framework',
+    'rest_framework_simplejwt', # for authentification
     'corsheaders',
 ]
 MIDDLEWARE = [
@@ -90,7 +101,7 @@ DATABASES = {
         'USER': os.getenv('DB_USER'),
         'PASSWORD': os.getenv('DB_PASSWORD'),
         'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT', '5432'),  # Default to 5432
+        'PORT': os.getenv('DB_PORT'),  
     }
 }
 
@@ -142,3 +153,16 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),  # Tokens expire after 1 day
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),  # Refresh token expires after 1 week
+}
