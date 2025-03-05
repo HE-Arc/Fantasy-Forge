@@ -17,7 +17,7 @@ jobs:
         cd /home/django/project/Fantasy-Forge
         cd ./api
         source .venv/bin/activate
-        pip install - r requirements.txt
+        pip install -r requirements.txt
         python manage.py migrate
         deactivate
         cd ../frontend
