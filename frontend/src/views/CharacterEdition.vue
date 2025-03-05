@@ -36,13 +36,28 @@ const fetchCharacter = async () => {
 // Handle form submission (POST for create, PUT for edit)
 const submitForm = async () => {
   try {
+
+    const token = localStorage.getItem("access");
+    console.log(token);
+
+    // Include the token in the headers for authentication
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    };
+
     if (isEdit.value) {
       // PUT request for editing an existing character
-      const response = await axios.put(`/api/characters/${characterId.value}/`, { name: name.value });
+      const response = await axios.put(`/api/characters/${characterId.value}/`, { name: name.value }); // here TODO ??
       message.value = `Character "${response.data.name}" updated successfully!`;
     } else {
+      // for connection with user-creator later
+      //const decodedToken = JSON.parse(atob(token.split('.')[1])); // Decode JWT to get the user ID
+      //const userId = decodedToken.user_id; // Make sure this matches your token payload
+
       // POST request for creating a new character
-      const response = await axios.post('/api/characters/', { name: name.value });
+      const response = await axios.post('/api/characters/', { name: name.value /*, user: userId */});
       message.value = `Character "${response.data.name}" created successfully!`;
     }
 

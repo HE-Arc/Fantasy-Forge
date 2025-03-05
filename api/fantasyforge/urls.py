@@ -21,8 +21,6 @@ from rest_framework.routers import DefaultRouter
 from fantasyforgeapp import views
 
 router = DefaultRouter()
-# Add your viewsets to the router here, for example:
-# router.register(r'myviewset', views.MyViewSet)
 
 router.register(r"auth", views.AuthViewSet, basename="auth")
 

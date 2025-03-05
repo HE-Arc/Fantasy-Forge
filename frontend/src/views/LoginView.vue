@@ -28,14 +28,16 @@ async function handleLogin() {
 
           <div class="mb-4">
             <!-- Username -->
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" v-model="username" placeholder="Username" required />
+            <input class="ff-input" v-model="username" placeholder="Username" required />
           </div>
           <div class="py-5">
             <!-- Password -->
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" v-model="password" type="password" placeholder="Password" required />
+            <input class="ff-input" v-model="password" type="password" placeholder="Password" required />
           </div>
             <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">Login</button>
+            <a class="text-red px-4 py-2 rounded" href="register">No account? Register</a>
         </form>
+
         </div>
         <p v-if="errorMessage" style="color: red;">{{ errorMessage }}</p>
 

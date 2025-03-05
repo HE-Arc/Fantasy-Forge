@@ -14,7 +14,7 @@ from django.contrib.auth import authenticate, login, logout
 
 # list of characters
 class CharacterViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    #permission_classes = [IsAuthenticated]
 
     queryset = Character.objects.all()
     serializer_class = CharacterSerializer
@@ -32,6 +32,7 @@ class AuthViewSet(viewsets.ViewSet):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            
             return Response({"message": "User logged in"}, status=status.HTTP_200_OK)
         return Response({"error": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)
 

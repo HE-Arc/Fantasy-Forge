@@ -9,6 +9,7 @@ export async function register(username, email, password, password2) {
             password,
             password2,
         });
+
         return response.data;
     } catch (error) {
         console.error("Registration failed:", error.response.data);
@@ -27,6 +28,8 @@ export async function login(username, password) {
         const tokens = response.data; // {access, refresh}
         localStorage.setItem("access", tokens.access); // Save tokens
         localStorage.setItem("refresh", tokens.refresh);
+
+        console.log(localStorage.getItem("access"));
 
         setAuthToken(tokens.access); // Set token for future requests
         return tokens;
