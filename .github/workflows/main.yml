@@ -16,7 +16,10 @@ jobs:
       run: |
         cd /home/django/project/Fantasy-Forge
         cd ./api
-        pipenv run python manage.py migrate
+        source .venv/bin/activate
+        pip install - r requirements.txt
+        python manage.py migrate
+        deactivate
         cd ../frontend
         npm install
         npm install axios
