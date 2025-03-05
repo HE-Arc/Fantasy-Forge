@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "45d995b228980f0f27615448f91c81f3b523e9f442d2871cfa6fa491a25c317f"
+            "sha256": "80d7bb8528e5906bcc44dc8a12d8225c8e9aa0f28804bfcf36d53df2d4a39db0"
         },
         "pipfile-spec": 6,
         "requires": {},
@@ -132,6 +132,15 @@
             "index": "pypi",
             "markers": "python_version >= '3.8'",
             "version": "==1.0.1"
+        },
+        "rest-framework-simplejwt": {
+            "hashes": [
+                "sha256:035187ce5380e18e8b966610a89b6460fb4b73cd179979343888fb190328125d",
+                "sha256:620c56826ff4791c4aaa730ec52aed1f4c74b9c20ea15b9fc1a39bdf99a29a30"
+            ],
+            "index": "pypi",
+            "markers": "python_version >= '3.0'",
+            "version": "==0.0.2"
         },
         "sqlparse": {
             "hashes": [
