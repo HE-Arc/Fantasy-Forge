@@ -8,36 +8,31 @@
   font-weight: normal;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
+.ff-input {
+  @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight;
+}
+
+.ff-input:focus {
+  @apply outline-none ring;
+}
+
+.ff-button {
+  @apply bg-red-500 text-white px-4 py-2 rounded; 
+}
+
+.ff-button:dark {
+  @apply text-gray-900;
+}
+
+.ff-button:hover {
+  @apply bg-red-800;
+  cursor: pointer;
 }
 
 @media (hover: hover) {
   a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
-
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-
-  font-weight: normal;
-}
-
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
+    background-color: hsla(0, 100%, 50%, 0.874);
+    @apply rounded;
   }
 }
 

@@ -21,7 +21,7 @@ const router = createRouter({
     {
       path: '/characters',
       name: 'characters',
-      component: () => import('../views/CharactersView.vue'),
+      component: HomeView,
     },
 
     {
@@ -35,7 +35,25 @@ const router = createRouter({
       name: 'character-new',
       component: () => import('../views/CharacterEdition.vue'),
     },
+
+    { path: "/login",
+      name: 'login',
+      component: () => import('../views/LoginView.vue' ) },
+    { path: "/register",
+      name: 'register',
+      component: () => import('../views/RegisterView.vue' ) },
+    //{ path: "/dashboard", component: DashboardView },
+
   ],
 })
+
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = !!localStorage.getItem("access");
+  if ( ( to.path != "/register"  && to.path != "/login" ) && !isAuthenticated) {
+      next("/login");
+  } else {
+      next();
+  }
+});
 
 export default router

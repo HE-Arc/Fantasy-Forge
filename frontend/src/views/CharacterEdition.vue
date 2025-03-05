@@ -36,13 +36,28 @@ const fetchCharacter = async () => {
 // Handle form submission (POST for create, PUT for edit)
 const submitForm = async () => {
   try {
+
+    const token = localStorage.getItem("access");
+    console.log(token);
+
+    // Include the token in the headers for authentication
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    };
+
     if (isEdit.value) {
       // PUT request for editing an existing character
-      const response = await axios.put(`/api/characters/${characterId.value}/`, { name: name.value });
+      const response = await axios.put(`/api/characters/${characterId.value}/`, { name: name.value }); // here TODO ??
       message.value = `Character "${response.data.name}" updated successfully!`;
     } else {
+      // for connection with user-creator later
+      //const decodedToken = JSON.parse(atob(token.split('.')[1])); // Decode JWT to get the user ID
+      //const userId = decodedToken.user_id; // Make sure this matches your token payload
+
       // POST request for creating a new character
-      const response = await axios.post('/api/characters/', { name: name.value });
+      const response = await axios.post('/api/characters/', { name: name.value /*, user: userId */});
       message.value = `Character "${response.data.name}" created successfully!`;
     }
 
@@ -59,7 +74,7 @@ const submitForm = async () => {
     <h2>{{ isEdit ? 'Edit' : 'Create' }} Character</h2>
     <form @submit.prevent="submitForm">
       <input v-model="name" type="text" placeholder="Character Name" required />
-      <button type="submit">{{ isEdit ? 'Update' : 'Create' }} Character</button>
+      <button type="submit" class="ff-button">{{ isEdit ? 'Update' : 'Create' }} Character</button>
     </form>
 
     <p v-if="message">{{ message }}</p>
@@ -72,12 +87,5 @@ input {
   margin-right: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
-}
-button {
-  padding: 8px 12px;
-  background-color: blue;
-  color: white;
-  border: none;
-  cursor: pointer;
 }
 </style>
