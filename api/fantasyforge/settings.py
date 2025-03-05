@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-+qz#9yx_m(fovghs=hxccwy(8&9zox(%jbwjq84@5@i(zo=i$#
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "127.0.0.1",
+    "localhost",
     "api-fantasy-forge.k8s.ing.he-arc.ch",
     ]
 
