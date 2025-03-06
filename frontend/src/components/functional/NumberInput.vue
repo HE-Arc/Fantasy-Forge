@@ -38,8 +38,6 @@ min nad max are optional, to define limits of the changer
 <style scoped>
 
 .value-control {
-  width: var(--control-size);
-  height: var(--control-size);
   margin: 0 0.1rem;
   padding: 0.5rem;
   background: transparent;
