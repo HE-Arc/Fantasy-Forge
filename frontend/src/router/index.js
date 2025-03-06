@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import DnDApi from '@/views/Rules.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -34,6 +35,12 @@ const router = createRouter({
       path: '/characters/new',
       name: 'character-new',
       component: () => import('../views/CharacterEdition.vue'),
+    },
+
+    {
+      path: '/classes',
+      name: 'classes',
+      component: DnDApi,
     },
 
     { path: "/login",
