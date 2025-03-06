@@ -30,6 +30,13 @@ const deleteCharacter = async (id) => {
 </script>
 <template>
   <div>
+    <div class="container mx-auto px-2 py-4">
+      <h1 class="text-4xl font-bold mb-8">Character List - How does it work?</h1>
+      </div>
+      <div class="container mx-auto px-2 py-4">
+      <p>On this page, you see the list of (currently all existent, but later-) the characters you or your friends created. You can create new ones, delete existent, or click them to see and edit their full character sheet (currently not present).</p>
+   </div>
+
     <div class="flex justify-end mb-4">
       <router-link :to="{ name: 'character-new' }" class="ff-button">Add Character</router-link>
     </div>
