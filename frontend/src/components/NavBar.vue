@@ -1,4 +1,5 @@
 <script setup>
+import LoginLogout from '@/components/functional/LoginLogout.vue'
 import { ref } from 'vue'
 </script>
 
@@ -23,10 +24,7 @@ import { ref } from 'vue'
             </router-link>
           </li>
           <li>
-            <!-- TODO if logged in - log out -->
-            <router-link :to="{ name: 'login' }" class="text-gray-400 dark:text-white-400 inline-block py-2 px-4 text-sm font-medium">
-              Login
-            </router-link>
+            <LoginLogout></LoginLogout>
           </li>
         </ul>
       </div>
