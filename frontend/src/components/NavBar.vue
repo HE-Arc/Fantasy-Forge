@@ -14,22 +14,26 @@ import { ref } from 'vue'
           </li>
           <li>
             <router-link :to="{ name: 'characters' }" class="text-gray-900 dark:text-gray-100 inline-block py-2 px-4 text-sm font-medium">
+              <img src="https://seiyria.com/gameicons-font/svg/warlord-helmet.svg" alt="Characters" class="h-6 w-auto inline-block" />
               Characters
             </router-link>
           </li>
           <li>
             <router-link :to="{ name: 'classes' }" class="text-gray-900 dark:text-gray-100 inline-block py-2 px-4 text-sm font-medium">
+              <img src="https://seiyria.com/gameicons-font/svg/bookshelf.svg" alt="Rules" class="h-6 w-auto inline-block" />
               Rules
             </router-link>
           </li>
           <li>
             <router-link :to="{ name: 'about' }" class="text-gray-900 dark:text-gray-100 inline-block py-2 px-4 text-sm font-medium">
+              <img src="https://seiyria.com/gameicons-font/svg/scroll-unfurled.svg" alt="About" class="h-6 w-auto inline-block" />
               About
             </router-link>
           </li>
           <li>
             <!-- TODO if logged in - log out -->
             <router-link :to="{ name: 'login' }" class="text-gray-400 dark:text-white-400 inline-block py-2 px-4 text-sm font-medium">
+              <img src="https://seiyria.com/gameicons-font/svg/entry-door.svg" alt="Login" class="h-6 w-auto inline-block" />
               Login
             </router-link>
           </li>
