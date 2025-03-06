@@ -19,8 +19,11 @@ jobs:
         source .venv/bin/activate
         pip install -r requirements.txt
         python manage.py migrate
+        sudo pkill -9 gunicorn
+        sudo systemctl start gunicorn
         deactivate
         cd ../frontend
         npm install
         npm install axios
         npm run build
+        sudo systemctl restart nginx
