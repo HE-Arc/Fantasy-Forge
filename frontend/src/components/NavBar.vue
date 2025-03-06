@@ -1,6 +1,10 @@
 <script setup>
 import LoginLogout from '@/components/functional/LoginLogout.vue'
 import { ref } from 'vue'
+import IconCharacter from './icons/IconCharacter.vue';
+import IconRules from './icons/IconRules.vue';
+import IconAbout from './icons/IconAbout.vue';
+import IconLogin from './icons/IconLogin.vue';
 </script>
 
 <template>
@@ -15,11 +19,19 @@ import { ref } from 'vue'
           </li>
           <li>
             <router-link :to="{ name: 'characters' }" class="text-gray-900 dark:text-gray-100 inline-block py-2 px-4 text-sm font-medium">
+              <IconCharacter class="inline-block" />
               Characters
             </router-link>
           </li>
           <li>
+            <router-link :to="{ name: 'rules', params: {name: ''} }" class="text-gray-900 dark:text-gray-100 inline-block py-2 px-4 text-sm font-medium">
+              <IconRules class="inline-block" />
+              Rules
+            </router-link>
+          </li>
+          <li>
             <router-link :to="{ name: 'about' }" class="text-gray-900 dark:text-gray-100 inline-block py-2 px-4 text-sm font-medium">
+              <IconAbout class="inline-block" />
               About
             </router-link>
           </li>
