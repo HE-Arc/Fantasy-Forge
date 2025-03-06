@@ -1,5 +1,6 @@
-<!--
-Component to add/substract certain parameters. How to use:
+<!-- Component to add/substract certain parameters.
+
+How to use:
 
 <NumberInput :min = 5 :max = 10></NumberInput>
 min nad max are optional, to define limits of the changer
