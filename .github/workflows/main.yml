@@ -26,4 +26,3 @@ jobs:
         npm install
         npm install axios
         npm run build
-        sudo systemctl restart nginx
