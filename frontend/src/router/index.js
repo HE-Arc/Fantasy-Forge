@@ -38,8 +38,8 @@ const router = createRouter({
     },
 
     {
-      path: '/rules/classes',
-      name: 'classes',
+      path: '/rules/:name*',
+      name: 'rules',
       component: RulesView,
     },
 
