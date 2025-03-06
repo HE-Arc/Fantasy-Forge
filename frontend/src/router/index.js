@@ -39,6 +39,7 @@ const router = createRouter({
     { path: "/login",
       name: 'login',
       component: () => import('../views/LoginView.vue' ) },
+
     { path: "/register",
       name: 'register',
       component: () => import('../views/RegisterView.vue' ) },
@@ -49,7 +50,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const isAuthenticated = !!localStorage.getItem("access");
-  if ( ( to.path != "/register"  && to.path != "/login" ) && !isAuthenticated) {
+  if ( ( to.path != "/register"  && to.path != "/login" && to.path != "/about" ) && !isAuthenticated) {
       next("/login");
   } else {
       next();

@@ -12,7 +12,7 @@ const errorMessage = ref("");
 async function handleLogin() {
     try {
         await login(username.value, password.value);
-        router.push("/characters"); // Redirect after login
+        router.push("/characters").then(() => { window.location.reload(); });
     } catch (error) {
         errorMessage.value = "Invalid username or password.";
     }
@@ -35,7 +35,7 @@ async function handleLogin() {
             <input class="ff-input" v-model="password" type="password" placeholder="Password" required />
           </div>
             <button type="submit" class="ff-button">Login</button>
-            <a class="text-red px-4 py-2 rounded" href="register">No account? Register</a>
+            <a class="px-4 py-2.5 rounded dark:text-gray-900" href="register">No account? Register</a>
         </form>
 
         </div>

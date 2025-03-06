@@ -40,8 +40,16 @@ export async function login(username, password) {
 }
 
 // Logout function
-export function logout() {
+export async function logout() {
+  try {
+    const response = await api.post("/auth/logout/", {});
+
     localStorage.removeItem("access");
     localStorage.removeItem("refresh");
-    setAuthToken(null); // Remove token from API
+    setAuthToken(null);
+    return response.data;
+  } catch (error) {
+    console.error("Logout failed:", error.response.data);
+    throw error.response.data;
+  }
 }
