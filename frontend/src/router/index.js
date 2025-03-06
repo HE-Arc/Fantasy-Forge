@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import DnDApi from '@/views/Rules.vue';
+import RulesView from '../views/RulesView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,9 +38,9 @@ const router = createRouter({
     },
 
     {
-      path: '/classes',
+      path: '/rules/classes',
       name: 'classes',
-      component: DnDApi,
+      component: RulesView,
     },
 
     { path: "/login",
