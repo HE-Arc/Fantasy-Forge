@@ -18,7 +18,11 @@ const fetchItems = async (path) => {
     items.value = res.data;
   } catch (error) {
     console.error("Error fetching items:", error);
-    router.push({ name: "rules" });
+
+    router.push({ name: "rules" }).then(() => {
+      // Reload the page after redirecting
+      window.location.reload();
+    });
   }
 };
 
