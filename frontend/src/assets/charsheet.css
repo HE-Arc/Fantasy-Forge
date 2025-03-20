@@ -1,0 +1,40 @@
+/*
+Inspiration: https://wiki.roll20.net/Designing_Character_Sheet_Layout
+*/
+
+@layer base {
+.charsheet .sheet-grid-section{
+    display: grid !important; 
+    grid-template-columns: 60% 40%;
+    grid-template-rows:  60px 150px 150px 150px;
+    grid-template-areas:"namelvl hp     "
+                        "skills  stat   "
+                        "skills  equip  "
+                        "notes   equip  ";
+    grid-gap: 10px;
+  }
+  .charsheet div.sheet-block{
+    display: grid;
+    justify-content: center;
+    padding: 5px;
+    border: 3px solid black;
+  }
+  .charsheet div.sheet-namelvl{
+    grid-area: namelvl;
+  }
+  .charsheet div.sheet-hp{
+    grid-area: hp;
+  }
+  .charsheet div.sheet-stat{
+    grid-area: stat;
+  }
+  .charsheet div.sheet-skills{
+    grid-area: skills;
+  }
+  .charsheet div.sheet-equip{
+    grid-area: equip;
+  }
+  .charsheet div.sheet-notes{
+    grid-area: notes;
+  }
+}
