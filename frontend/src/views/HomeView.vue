@@ -9,8 +9,29 @@ const characters = ref([]);
 
 const fetchCharacters = async () => {
   try {
-    const res = await axios.get("/api/characters/");
-    characters.value = res.data;
+
+    const token = localStorage.getItem("access");
+
+    console.log(token);
+
+    if (!token) {
+      console.error("Missing token, please log in again.");
+      return;
+    }
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    };
+
+    const res = await axios.get("/api/characters/", config).then(response => {
+    console.log(response.data);
+    characters.value = response.data;
+  });
+
+    //characters.value = res.data;
+
   } catch (error) {
     console.error("Error fetching characters:", error);
   }

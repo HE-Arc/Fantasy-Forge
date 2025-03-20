@@ -26,7 +26,10 @@ export async function login(username, password) {
         });
 
         const tokens = response.data; // {access, refresh}
+        console.log("Tokens object:", tokens); // Log tokens
+        console.log("Access token:", tokens.access);
         localStorage.setItem("access", tokens.access); // Save tokens
+        console.log(token);
         localStorage.setItem("refresh", tokens.refresh);
 
         console.log(localStorage.getItem("access"));
