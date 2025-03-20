@@ -12,24 +12,13 @@ jobs:
         git fetch --all
         git checkout main
         git pull --all
-        
-    - name: Load environment variables
-      run: |
-        export $(grep -v '^#' /home/django/project/Fantasy-Forge/api/.env | xargs)
-
-    - name: Drop and recreate database
-      run: |
-        export $(grep -v '^#' /home/django/project/Fantasy-Forge/api/.env | xargs)
-        export PGPASSWORD=$DB_PASSWORD
-        psql -U $DB_USER -d postgres -h $DB_HOST -p $DB_PORT -c "DROP DATABASE IF EXISTS $DB_NAME;"
-        psql -U $DB_USER -d postgres -h $DB_HOST -p $DB_PORT -c "CREATE DATABASE $DB_NAME OWNER $DB_USER;"
-
     - name: installing dependencies and setup
       run: |
         cd /home/django/project/Fantasy-Forge/api
         source .venv/bin/activate
         pip install -r requirements.txt
-        python manage.py makemigrations
+        python manage.py flush --noinput --skip-checks
+        python manage.py make migrations
         python manage.py migrate
         sudo pkill -9 gunicorn
         sudo systemctl start gunicorn
