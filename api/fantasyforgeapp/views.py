@@ -10,32 +10,9 @@ from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 from django.contrib.auth import authenticate, login, logout
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
-
-'''
-class UserCharactersView(APIView):
-    """Returns only the characters owned by the authenticated user"""
-
-    #permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        """Return all characters owned by the user"""
-        owned_characters = Character.objects.filter(ownership__user=request.user)
-        serializer = CharacterSerializer(owned_characters, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def post(self, request):
-        """Create a new character and assign it to the user"""
-        serializer = CharacterSerializer(data=request.data)
-        if serializer.is_valid():
-            character = serializer.save()
-
-            # Assign ownership to the user
-            Ownership.objects.create(user=request.user, character=character)
-
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-'''
 
 # list of characters
 class CharacterViewSet(viewsets.ModelViewSet):
@@ -51,12 +28,17 @@ class CharacterViewSet(viewsets.ModelViewSet):
 
 # credit : https://github.com/HE-Arc/Instagenda/
 
+@method_decorator(csrf_exempt, name="dispatch")
 class AuthViewSet(viewsets.ViewSet):
+
+    
 
     @action(detail=False, methods=['post'])
     def login(self, request):
         username = request.data.get('username')
         password = request.data.get('password')
+
+        print(f"Login attempt: username={username}, password={password}")
 
         user = authenticate(request, username=username, password=password)
         if user is not None:
