@@ -8,4 +8,5 @@ router.register(r"characters", views.CharacterViewSet, basename="characters")
 
 urlpatterns = [
     path("", include(router.urls)),
+    #path("api/characters/", UserCharactersView.as_view(), name="user-characters"),
 ]

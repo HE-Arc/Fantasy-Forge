@@ -49,7 +49,7 @@ const submitForm = async () => {
 
     if (isEdit.value) {
       // PUT request for editing an existing character
-      const response = await axios.put(`/api/characters/${characterId.value}/`, { name: name.value }); // here TODO ??
+      const response = await axios.put(`/api/characters/${characterId.value}/`, { name: name.value }, config); // here TODO ??
       message.value = `Character "${response.data.name}" updated successfully!`;
     } else {
       // for connection with user-creator later
@@ -57,7 +57,7 @@ const submitForm = async () => {
       //const userId = decodedToken.user_id; // Make sure this matches your token payload
 
       // POST request for creating a new character
-      const response = await axios.post('/api/characters/', { name: name.value /*, user: userId */});
+      const response = await axios.post('/api/characters/', { name: name.value /*, user: userId */}, config);
       message.value = `Character "${response.data.name}" created successfully!`;
     }
 
