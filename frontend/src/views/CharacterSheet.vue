@@ -55,11 +55,13 @@ const fetchCharacter = async () => {
 <div class="container mx-auto px-2 py-4">
 
 
+<div style="text-align: right;">
   <form @submit.prevent="addOwner">
     <!-- TODO search among users via SearchElement? -->
       <input type="text" placeholder="Owner id" required />
       <button type="submit" class="ff-button">Add owner</button>
     </form>
+  </div>
 
     <!-- TODO make the button to the right corner -->
     <div style="align-content: right;">
@@ -72,23 +74,41 @@ const fetchCharacter = async () => {
     <label>Name</label>
     <h1>(Character name) : {{char_name}}</h1>
   </div>
-  <div class="sheet-hp sheet-block">
-    <span>HP</span>
+  <div class="sheet-class sheet-block">
+    <span>Class</span>
   </div>
   <div class="sheet-stat sheet-block">
-    <h3>Main Stat</h3>
+    <div><NumberInput
+      name = "Strength"
+    ></NumberInput></div>
+    <span><NumberInput
+      name = "Dexterity"
+    ></NumberInput></span>
+    <span><NumberInput
+      name = "Constitution"
+    ></NumberInput></span>
+    <span><NumberInput
+      name = "Intelligence"
+    ></NumberInput></span>
+    <span><NumberInput
+      name = "Wisdom"
+    ></NumberInput></span>
+    <span><NumberInput
+      name = "Charisma"
+    ></NumberInput></span>
   </div>
   <div class="sheet-skills sheet-block">
     <h3>Skills</h3>
-    <label><button name="roll_str" value="/r 1d6+@{str}" type="roll"></button> strength <input type="number" name="attr_str"></label>
-    <label><button name="roll_agi" value="/r 1d6+@{agi}" type="roll"></button> agility <input type="number" name="attr_agi"></label>
-    <label><button name="roll_mind" value="/r 1d6+@{mind}" type="roll"></button> mind <input type="number" name="attr_mind"></label>
+    <label><button name="roll_str" value="/r 1d6+@{str}" type="roll"></button> acrobatics <input type="number" name="attr_str"></label>
+    <label><button name="roll_agi" value="/r 1d6+@{agi}" type="roll"></button> history <input type="number" name="attr_agi"></label>
+    <label><button name="roll_mind" value="/r 1d6+@{mind}" type="roll"></button> animal handling <input type="number" name="attr_mind"></label>
   </div>
-  <div class="sheet-equip sheet-block">
-    <h3>Equipment</h3>
+  <div class="sheet-bio sheet-block">
+    <h3>Biography</h3>
   </div>
   <div class="sheet-notes sheet-block">
-    <h3>Notes</h3>
+    <h3>Notes (logs)</h3>
+    <span>TODO : list</span>
   </div>
 </div>
 </div>
