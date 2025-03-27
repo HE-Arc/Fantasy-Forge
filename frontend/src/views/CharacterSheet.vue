@@ -72,7 +72,7 @@ const fetchCharacter = async () => {
     <div class="sheet-grid-section">
   <div class="sheet-namelvl sheet-block">
     <label>Name</label>
-    <h1>(Character name) : {{char_name}}</h1>
+    <div style="font-weight: 700;">{{char_name}}</div>
   </div>
   <div class="sheet-class sheet-block">
     <span>Class</span>
@@ -109,6 +109,10 @@ const fetchCharacter = async () => {
   <div class="sheet-notes sheet-block">
     <h3>Notes (logs)</h3>
     <span>TODO : list</span>
+    <div style="align-content: right;">
+
+    <a class="px-4 py-2.5 text-red-700 hover:text-red-100 rounded dark:text-gray-900 " href="">View all logs</a>
+  </div>
   </div>
 </div>
 </div>

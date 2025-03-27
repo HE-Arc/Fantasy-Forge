@@ -20,6 +20,7 @@ class CharacterSerializer(serializers.ModelSerializer):
             "intelligence",
             "wisdom",
             "charisma",
+            "biography",
             "owners"
         ]
 
