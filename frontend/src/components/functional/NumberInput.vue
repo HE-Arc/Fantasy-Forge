@@ -13,9 +13,11 @@ min nad max are optional, to define limits of the changer
 -->
 
 <template>
+  <div style="text-align: center;">
+  <div style="text-align:center; text-decoration: overline; font-style: oblique; font-weight: 600;">{{ name }}</div>
   <button
   class="value-control"
-  onclick="numberInput.stepDown()"
+  @click = "stepDown"
   title="Decrease value"
   aria-label="Decrease value">-</button>
 
@@ -26,13 +28,16 @@ min nad max are optional, to define limits of the changer
   name="numberInput"
   :min = "min"
   :max = "max"
+  @input="onInput"
+  ref = "inputRef"
   id="numberInput" readonly>
 
 <button
   class="value-control"
-  onclick="numberInput.stepUp()"
+  @click="stepUp"
   title="Increase value"
   aria-label="Increase value">+</button>
+</div>
 
 </template>
 
@@ -64,7 +69,7 @@ min nad max are optional, to define limits of the changer
 
 .value-input {
   margin: 0;
-  width: auto;
+  width: 35%;
   border: 0.3rem double red;
   border-radius: 0.8rem;
   padding: 0.5rem;
@@ -87,6 +92,15 @@ export default {
       type: Number,
       default: 10, // Default max value
     },
+    value: {
+      type: Number,
+      //default: 0,
+    },
+    name: {
+      type: String,
+      default: "Empty label",
+    }
+
   },
   data() {
     return {
@@ -96,6 +110,25 @@ export default {
   watch: {
     value(newVal) {
       this.inputValue = newVal;
+    },
+    inputValue(newVal) {
+      this.$emit('update:value', newVal);
+    }
+  },
+  methods: {
+    stepUp() {
+      const input = this.$refs.inputRef;
+      if (input && typeof input.stepUp === 'function') {
+        input.stepUp();
+        this.inputValue = Number(input.value);
+      }
+    },
+    stepDown() {
+      const input = this.$refs.inputRef;
+      if (input && typeof input.stepDown === 'function') {
+        input.stepDown();
+        this.inputValue = Number(input.value);
+      }
     },
   },
 };

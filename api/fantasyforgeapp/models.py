@@ -11,6 +11,7 @@ class Character(models.Model):
     intelligence= models.IntegerField(default=0)
     wisdom= models.IntegerField(default=0)
     charisma = models.IntegerField(default=0)
+    biography = models.TextField(default="no biography")
 
 
 class Ownership(models.Model):

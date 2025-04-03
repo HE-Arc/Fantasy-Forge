@@ -1,0 +1,44 @@
+/*
+Inspiration: https://wiki.roll20.net/Designing_Character_Sheet_Layout
+*/
+
+@layer base {
+.charsheet .sheet-grid-section{
+    display: grid !important; 
+    grid-template-columns: 20% 25% 25% 30%;
+    grid-template-rows:  12% 30% 28% 30%;
+    grid-template-areas:"namelvl namelvl class class     "
+                        "stat bio bio bio   "
+                        "stat skills skills  notes  "
+                        "stat skills skills   notes  ";
+    grid-gap: 1%;
+    padding: 1%;
+  }
+  .charsheet div.sheet-block{
+    display: grid;
+    justify-content: center;
+    padding: 1%;
+    border: 0.15rem solid rgb(133, 67, 67);
+    border-radius: 0.3rem;
+  }
+  .charsheet div.sheet-namelvl{
+    grid-area: namelvl;
+    background-color:rgb(255, 213, 218);
+  }
+  .charsheet div.sheet-class{
+    grid-area: class;
+    background-color:rgb(255, 213, 218);
+  }
+  .charsheet div.sheet-stat{
+    grid-area: stat;
+  }
+  .charsheet div.sheet-skills{
+    grid-area: skills;
+  }
+  .charsheet div.sheet-bio{
+    grid-area: bio;
+  }
+  .charsheet div.sheet-notes{
+    grid-area: notes;
+  }
+}

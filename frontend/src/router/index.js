@@ -28,7 +28,7 @@ const router = createRouter({
     {
       path: '/characters/:id',
       name: 'character-edit',
-      component: () => import('../views/CharacterEdition.vue'),
+      component: () => import('../views/CharacterSheet.vue'),
     },
 
     {
