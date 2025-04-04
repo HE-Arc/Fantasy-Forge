@@ -7,6 +7,7 @@ const route = useRoute();
 const router = useRouter();
 const items = ref([]);
 const abilityDetails = ref({});
+const classDetails = ref({});
 
 const categories = ref(["ability-scores", "classes", "skills"]);
 
@@ -20,9 +21,11 @@ const fetchItems = async (path) => {
     const res = await axios.get(`${import.meta.env.VITE_DND_API_URL}${path}`);
     items.value = res.data;
 
-    // If we are on "ability-scores", fetch individual details
-    if (route.params.name === "ability-scores" && res.data.results) {
-      await fetchAbilityDetails(res.data.results);
+    if (path === "ability-scores") {
+      fetchAbilityDetails(items.value.results);
+    }
+    if (path === "classes") {
+      fetchClassDetails(items.value.results);
     }
   } catch (error) {
     console.error("Error fetching items:", error);
@@ -46,11 +49,21 @@ const fetchAbilityDetails = async (abilities) => {
   abilityDetails.value = details; // Assign once to trigger reactivity
 };
 
-// Fetch when component mounts
-onMounted(() => {
-  fetchItems(getPath());
-  fetchAbilityDetails();
-});
+// Fetch class details
+const fetchClassDetails = async (classes) => {
+  const details = {};
+  await Promise.all(
+    classes.map(async (cls) => {
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_DND_API_URL}classes/${cls.index}`);
+        details[cls.index] = res.data;
+      } catch (error) {
+        console.error(`Error fetching ${cls.index}:`, error);
+      }
+    })
+  );
+  classDetails.value = details; // Assign once to trigger reactivity
+};
 
 // Watch route changes and refetch data
 watch(
@@ -82,12 +95,34 @@ watch(
     </div>
 
     <div v-else>
+      <p v-if="classDetails[items.results[0].index]">
+        More details about proficiency choices in <router-link :to="{ name: 'rules', params: { name: 'skills' } }">skills</router-link>.
+      </p>
       <div class="cards-container">
         <div v-for="item in items.results" :key="item.index" class="card">
-          <div v-if="route.params.name === 'ability-scores'">
+          <div v-if="abilityDetails[item.index]">
             <h2>{{ abilityDetails[item.index]?.name }}</h2>
             <h3>{{ abilityDetails[item.index]?.full_name }}</h3>
             <p v-for="desc in abilityDetails[item.index]?.desc" :key="desc">{{ desc }}</p>
+          </div>
+          <div v-else-if="classDetails[item.index]">
+            <h2>{{ classDetails[item.index]?.name }}</h2>
+            <h3>HP {{ classDetails[item.index]?.hit_die }}</h3>
+            <section>
+              <h3>Proficiency choices</h3>
+              <p v-for="choice in classDetails[item.index]?.proficiency_choices" :key="choice.index">
+                {{ choice.desc }}
+              </p>
+            </section>
+            <section>
+              <h3>Starting equipment options</h3>
+              <ul>
+                <li v-for="option in classDetails[item.index]?.starting_equipment_options" :key="option.index">
+                  {{ option.desc }}
+                </li>
+              </ul>
+            </section>
+            <!-- class levels -->
           </div>
           <div v-else>
             <h2>{{ item.name }}</h2>
