@@ -1,6 +1,6 @@
 <script setup>
 import axios from "axios";
-import { ref, onMounted, watch } from "vue";
+import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
@@ -8,6 +8,7 @@ const router = useRouter();
 const items = ref([]);
 const abilityDetails = ref({});
 const classDetails = ref({});
+const skillDetails = ref({});
 
 const categories = ref(["ability-scores", "classes", "skills"]);
 
@@ -22,47 +23,35 @@ const fetchItems = async (path) => {
     items.value = res.data;
 
     if (path === "ability-scores") {
-      fetchAbilityDetails(items.value.results);
+      abilityDetails.value = await fetchDetails(items.value.results, path);
     }
     if (path === "classes") {
-      fetchClassDetails(items.value.results);
+      classDetails.value = await fetchDetails(items.value.results, path);
     }
+    if (path === "skills") {
+      skillDetails.value = await fetchDetails(items.value.results, path);
+    }
+
   } catch (error) {
     console.error("Error fetching items:", error);
     router.push({ name: "rules" }).then(() => window.location.reload());
   }
 };
 
-// Fetch details for each ability
-const fetchAbilityDetails = async (abilities) => {
+// Fetch details for each item in the category
+const fetchDetails = async (categoryItems, path) => {
   const details = {};
   await Promise.all(
-    abilities.map(async (ability) => {
+    categoryItems.map(async (item) => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_DND_API_URL}ability-scores/${ability.index}`);
-        details[ability.index] = res.data;
+        const res = await axios.get(`${import.meta.env.VITE_DND_API_URL}${path}/${item.index}`);
+        details[item.index] = res.data;
       } catch (error) {
-        console.error(`Error fetching ${ability.index}:`, error);
+        console.error(`Error fetching ${item.index}:`, error);
       }
     })
   );
-  abilityDetails.value = details; // Assign once to trigger reactivity
-};
-
-// Fetch class details
-const fetchClassDetails = async (classes) => {
-  const details = {};
-  await Promise.all(
-    classes.map(async (cls) => {
-      try {
-        const res = await axios.get(`${import.meta.env.VITE_DND_API_URL}classes/${cls.index}`);
-        details[cls.index] = res.data;
-      } catch (error) {
-        console.error(`Error fetching ${cls.index}:`, error);
-      }
-    })
-  );
-  classDetails.value = details; // Assign once to trigger reactivity
+  return details;
 };
 
 // Watch route changes and refetch data
@@ -95,8 +84,8 @@ watch(
     </div>
 
     <div v-else>
-      <p v-if="classDetails[items.results[0].index]">
-        More details about proficiency choices in <router-link :to="{ name: 'rules', params: { name: 'skills' } }">skills</router-link>.
+      <p v-if="items?.results?.length && classDetails[items.results[0]?.index]">
+        More details about proficiency choices can be found in <router-link :to="{ name: 'rules', params: { name: 'skills' } }">skills</router-link>.
       </p>
       <div class="cards-container">
         <div v-for="item in items.results" :key="item.index" class="card">
@@ -105,6 +94,7 @@ watch(
             <h3>{{ abilityDetails[item.index]?.full_name }}</h3>
             <p v-for="desc in abilityDetails[item.index]?.desc" :key="desc">{{ desc }}</p>
           </div>
+
           <div v-else-if="classDetails[item.index]">
             <h2>{{ classDetails[item.index]?.name }}</h2>
             <h3>HP {{ classDetails[item.index]?.hit_die }}</h3>
@@ -115,6 +105,14 @@ watch(
               </p>
             </section>
             <section>
+              <h3>Proficiencies</h3>
+              <ul>
+                <li v-for="proficiency in classDetails[item.index]?.proficiencies" :key="proficiency.index">
+                  {{ proficiency.name }}
+                </li>
+              </ul>
+            </section>
+            <section>
               <h3>Starting equipment options</h3>
               <ul>
                 <li v-for="option in classDetails[item.index]?.starting_equipment_options" :key="option.index">
@@ -122,54 +120,26 @@ watch(
                 </li>
               </ul>
             </section>
-            <!-- class levels -->
           </div>
+
+          <div v-else-if="skillDetails[item.index]">
+            <h2>{{ skillDetails[item.index]?.name }}</h2>
+            <p v-for="desc in skillDetails[item.index]?.desc" :key="desc">{{ desc }}</p>
+          </div>
+
           <div v-else>
             <h2>{{ item.name }}</h2>
           </div>
         </div>
       </div>
-      <a @click="router.back()">Back</a>
     </div>
   </div>
 </template>
 
 <style scoped>
-.cards-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1rem;
-  padding: 1rem;
-}
-
-.card {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 1rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-}
-
 h1 {
   font-size: 2rem;
   margin-bottom: 1rem;
   font-weight: bold;
-}
-
-h2 {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-h3 {
-  font-size: 1.2rem;
-  color: #666;
-  margin-bottom: 0.5rem;
-}
-
-p {
-  color: #333;
-  margin-bottom: 0.5rem;
 }
 </style>
