@@ -36,12 +36,8 @@ class CharacterSerializer(serializers.ModelSerializer):
         # authomatically create ownership object for the creator
         Ownership.objects.create(user=user, character=character)
         return character
-
-    def update(self, instance, validated_data):
-        instance.name = validated_data.get("name", instance.name)
-        instance.save()
-        return instance
     
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:

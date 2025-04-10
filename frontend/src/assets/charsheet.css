@@ -36,6 +36,8 @@ Inspiration: https://wiki.roll20.net/Designing_Character_Sheet_Layout
     grid-area: skills;
   }
   .charsheet div.sheet-bio{
+    padding: 2% !important;
+    justify-content: unset;
     grid-area: bio;
   }
   .charsheet div.sheet-notes{

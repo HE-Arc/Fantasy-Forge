@@ -3,6 +3,7 @@ import NavBar from '@/components/NavBar.vue'
 </script>
 
 <template>
+  <v-app>
   <div class="flex flex-col h-screen">
     <!-- navbar -->
     <NavBar/>
@@ -10,6 +11,7 @@ import NavBar from '@/components/NavBar.vue'
       <router-view/>
     </div>
   </div>
+</v-app>
 </template>
 
 <style scoped>
