@@ -7,12 +7,19 @@ const router = useRouter();
 const username = ref("");
 const password = ref("");
 const errorMessage = ref("");
+const isAuthenticated = ref(!!localStorage.getItem("access"));
 
 
 async function handleLogin() {
     try {
-        await login(username.value, password.value);
-        router.push("/characters").then(() => { window.location.reload(); });
+      await login(username.value, password.value)
+      .then(() => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 10);
+      });
+      isAuthenticated.value = true;
+      router.push("/characters");
     } catch (error) {
         errorMessage.value = "Invalid username or password.";
     }
