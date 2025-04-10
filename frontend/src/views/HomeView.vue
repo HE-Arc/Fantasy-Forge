@@ -6,6 +6,8 @@ import IconTrashcan from "@/components/icons/IconTrashcan.vue";
 import IconEdit from "@/components/icons/IconEdit.vue";
 
 const characters = ref([]);
+const isAuthenticated = ref(!!localStorage.getItem("access"));
+console.log(isAuthenticated.value);
 
 const fetchCharacters = async () => {
   try {
@@ -40,6 +42,7 @@ const fetchCharacters = async () => {
 onMounted(() => {
   fetchCharacters();
 });
+
 const deleteCharacter = async (id) => {
   try {
     await axios.delete(`/api/characters/${id}/`);
