@@ -64,82 +64,78 @@ watch(
 
 <template>
   <div>
-    <h1>
-      {{
-        (Array.isArray(route.params.name) ? route.params.name.at(-1) : route.params.name || "RULES")
-          .replace("-", " ")
-          .toUpperCase()
-      }}
-    </h1>
+    <div class="container mx-auto px-4 py-8">
+      <h1 class="text-4xl font-bold mb-8">
+        {{
+          (Array.isArray(route.params.name) ? route.params.name.at(-1) : route.params.name || "RULES")
+            .replace("-", " ")
+            .toUpperCase()
+        }}
+      </h1>
 
-    <div v-if="!route.params.name">
-      <p>Choose a category from the list below:</p>
-      <ul>
-        <li v-for="category in categories" :key="category">
-          <router-link  class="link" :to="{ name: 'rules', params: { name: category } }">
-            {{ category.replace("-", " ").toUpperCase() }}
-          </router-link>
-        </li>
-      </ul>
-    </div>
+      <div class="container mx-auto px-2 py-4">
+        <div v-if="!route.params.name">
+          <p>Choose a category from the list below:</p>
+          <ul>
+            <li v-for="category in categories" :key="category">
+              <router-link  class="link" :to="{ name: 'rules', params: { name: category } }">
+                {{ category.replace("-", " ").toUpperCase() }}
+              </router-link>
+            </li>
+          </ul>
+        </div>
 
-    <div v-else>
-      <p v-if="items?.results?.length && classDetails[items.results[0]?.index]">
-        More details about proficiency choices can be found in <router-link class="text-red-700" :to="{ name: 'rules', params: { name: 'skills' } }">skills</router-link>.
-      </p>
-      <div class="cards-container">
-        <div v-for="item in items.results" :key="item.index" class="card">
-          <div v-if="abilityDetails[item.index]">
-            <h2>{{ abilityDetails[item.index]?.name }}</h2>
-            <h3>{{ abilityDetails[item.index]?.full_name }}</h3>
-            <p v-for="desc in abilityDetails[item.index]?.desc" :key="desc">{{ desc }}</p>
-          </div>
+        <div v-else>
+          <p v-if="items?.results?.length && classDetails[items.results[0]?.index]">
+            More details about proficiency choices can be found in <router-link class="text-red-700" :to="{ name: 'rules', params: { name: 'skills' } }">skills</router-link>.
+          </p>
+          <div class="cards-container">
+            <div v-for="item in items.results" :key="item.index" class="card">
+              <div v-if="abilityDetails[item.index]">
+                <h2>{{ abilityDetails[item.index]?.name }}</h2>
+                <h3>{{ abilityDetails[item.index]?.full_name }}</h3>
+                <p v-for="desc in abilityDetails[item.index]?.desc" :key="desc">{{ desc }}</p>
+              </div>
 
-          <div v-else-if="classDetails[item.index]">
-            <h2>{{ classDetails[item.index]?.name }}</h2>
-            <h3>HP {{ classDetails[item.index]?.hit_die }}</h3>
-            <section>
-              <h3>Proficiency choices</h3>
-              <p v-for="choice in classDetails[item.index]?.proficiency_choices" :key="choice.index">
-                {{ choice.desc }}
-              </p>
-            </section>
-            <section>
-              <h3>Proficiencies</h3>
-              <ul>
-                <li v-for="proficiency in classDetails[item.index]?.proficiencies" :key="proficiency.index">
-                  {{ proficiency.name }}
-                </li>
-              </ul>
-            </section>
-            <section>
-              <h3>Starting equipment options</h3>
-              <ul>
-                <li v-for="option in classDetails[item.index]?.starting_equipment_options" :key="option.index">
-                  {{ option.desc }}
-                </li>
-              </ul>
-            </section>
-          </div>
+              <div v-else-if="classDetails[item.index]">
+                <h2>{{ classDetails[item.index]?.name }}</h2>
+                <h3>HP {{ classDetails[item.index]?.hit_die }}</h3>
+                <section>
+                  <h3>Proficiency choices</h3>
+                  <p v-for="choice in classDetails[item.index]?.proficiency_choices" :key="choice.index">
+                    {{ choice.desc }}
+                  </p>
+                </section>
+                <section>
+                  <h3>Proficiencies</h3>
+                  <ul>
+                    <li v-for="proficiency in classDetails[item.index]?.proficiencies" :key="proficiency.index">
+                      {{ proficiency.name }}
+                    </li>
+                  </ul>
+                </section>
+                <section>
+                  <h3>Starting equipment options</h3>
+                  <ul>
+                    <li v-for="option in classDetails[item.index]?.starting_equipment_options" :key="option.index">
+                      {{ option.desc }}
+                    </li>
+                  </ul>
+                </section>
+              </div>
 
-          <div v-else-if="skillDetails[item.index]">
-            <h2>{{ skillDetails[item.index]?.name }}</h2>
-            <p v-for="desc in skillDetails[item.index]?.desc" :key="desc">{{ desc }}</p>
-          </div>
+              <div v-else-if="skillDetails[item.index]">
+                <h2>{{ skillDetails[item.index]?.name }}</h2>
+                <p v-for="desc in skillDetails[item.index]?.desc" :key="desc">{{ desc }}</p>
+              </div>
 
-          <div v-else>
-            <h2>{{ item.name }}</h2>
+              <div v-else>
+                <h2>{{ item.name }}</h2>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
-
-<style scoped>
-h1 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  font-weight: bold;
-}
-</style>
