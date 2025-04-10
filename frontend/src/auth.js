@@ -29,10 +29,10 @@ export async function login(username, password) {
         console.log("Tokens object:", tokens); // Log tokens
         console.log("Access token:", tokens.access);
         localStorage.setItem("access", tokens.access); // Save tokens
-        console.log(token);
         localStorage.setItem("refresh", tokens.refresh);
 
         console.log(localStorage.getItem("access"));
+        console.log(localStorage.getItem("refresh"));
 
         setAuthToken(tokens.access); // Set token for future requests
         return tokens;
