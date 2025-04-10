@@ -76,7 +76,7 @@ watch(
       <p>Choose a category from the list below:</p>
       <ul>
         <li v-for="category in categories" :key="category">
-          <router-link :to="{ name: 'rules', params: { name: category } }">
+          <router-link  class="link" :to="{ name: 'rules', params: { name: category } }">
             {{ category.replace("-", " ").toUpperCase() }}
           </router-link>
         </li>
@@ -85,7 +85,7 @@ watch(
 
     <div v-else>
       <p v-if="items?.results?.length && classDetails[items.results[0]?.index]">
-        More details about proficiency choices can be found in <router-link :to="{ name: 'rules', params: { name: 'skills' } }">skills</router-link>.
+        More details about proficiency choices can be found in <router-link class="text-red-700" :to="{ name: 'rules', params: { name: 'skills' } }">skills</router-link>.
       </p>
       <div class="cards-container">
         <div v-for="item in items.results" :key="item.index" class="card">

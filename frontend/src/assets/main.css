@@ -13,6 +13,10 @@ a {
   cursor: pointer;
 }
 
+.link {
+  @apply px-2 py-1 text-red-700
+}
+
 .ff-input {
   @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight;
 }
