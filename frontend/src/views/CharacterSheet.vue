@@ -13,18 +13,15 @@ const constitution_stat = ref(0);
 const intelligence_stat = ref(0);
 const wisdom_stat = ref(0);
 const charisma_stat = ref(0);
-const message = ref('');
-const isEdit = ref(false); // Flag to check if we are in edit mode
 const characterId = ref(null);
 const char_biography = ref('');
+const showAlert = ref(false);
 
 // Fetch character data for editing
 const route = useRoute();
-const router = useRouter();
 
 onMounted(async () => {
   if (route.params.id) {
-    isEdit.value = true;
     characterId.value = route.params.id;
     await fetchCharacter();
   }
@@ -59,16 +56,65 @@ const fetchCharacter = async () => {
     charisma_stat.value = response.data.charisma;
     char_biography.value = response.data.biography;
   } catch (error) {
-    message.value = 'Error fetching character data!';
     console.error(error);
   }
 };
+
+const saveChanges = async () => {
+  if (!characterId.value) return;
+
+  try {
+    const token = localStorage.getItem("access");
+
+    if (!token) {
+      console.error("Missing token, please log in again.");
+      return;
+    }
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    };
+
+    const payload = {
+      strength: strength_stat.value,
+      dexterity: dexterity_stat.value,
+      constitution: constitution_stat.value,
+      intelligence: intelligence_stat.value,
+      wisdom: wisdom_stat.value,
+      charisma: charisma_stat.value,
+      biography: char_biography.value,
+    };
+
+    await axios.patch(`/api/characters/${characterId.value}/`, payload, config);
+
+    // show alert about successfull edit
+    showAlert.value = true;
+
+    // auto-hide alert after 5 seconds
+    setTimeout(() => {
+      showAlert.value = false;
+    }, 5000);
+
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 </script>
 
 <template>
+<v-alert
+  v-if="showAlert"
+  color="success"
+  icon="$success"
+  title="Saved changes"
+  text="Your changes were successfully saved"
+  closable
+></v-alert>
 
 <div class="container mx-auto px-2 py-4">
-
 
 <div style="text-align: right;">
   <form @submit.prevent="addOwner">
@@ -79,7 +125,7 @@ const fetchCharacter = async () => {
   </div>
 
     <div style="align-content: right;">
-    <button type="submit" class="ff-button">Save changes</button>
+    <button type="submit" @click="saveChanges" class="ff-button">Save changes</button>
     </div>
 
     <div class="charsheet">
@@ -124,8 +170,16 @@ const fetchCharacter = async () => {
     <label><button name="roll_mind" value="/r 1d6+@{mind}" type="roll"></button> animal handling <input type="number" name="attr_mind"></label>
   </div>
   <div class="sheet-bio sheet-block">
-    <h3>Biography</h3>
-    <p>{{ char_biography }}</p>
+    <v-textarea
+      class="w-100"
+      label="Biography"
+      prepend-icon="mdi-script-text-outline"
+      v-model:model-value="char_biography"
+      name="input-7-1"
+      variant="filled"
+      rows="auto"
+      auto-grow
+    ></v-textarea>
   </div>
   <div class="sheet-notes sheet-block">
     <h3>Notes (logs)</h3>
