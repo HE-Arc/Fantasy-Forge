@@ -23,16 +23,39 @@ class CharacterViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         """Return only the characters owned by the logged-in user"""
-        return Character.objects.filter(ownership__user=self.request.user)
+        return Character.objects.filter(owners=self.request.user)
+    
+    @action(detail=True, methods=['post'], permission_classes=[IsAuthenticated])
+    def add_ownership(self, request, pk=None):
+        """Add ownership of a character to a specified user by username or the logged-in user"""
+        try:
+            character = self.get_object()
+
+            owner_name = request.data.get("owner_name")
+            if owner_name:
+                try:
+                    user = User.objects.get(username=owner_name)
+                except User.DoesNotExist:
+                    return Response({"error": "User not found"}, status=404)
+            else:
+                user = request.user
+
+            if Ownership.objects.filter(user=user, character=character).exists():
+                return Response({"error": "Ownership already exists"}, status=400)
+
+            character.owners.add(user)  # Add the user to the character's owners
+            return Response({"message": f"Ownership added for user {user.username}"}, status=201)
+
+        except Character.DoesNotExist:
+            return Response({"error": "Character not found"}, status=404)
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
 
 
 # credit : https://github.com/HE-Arc/Instagenda/
 
 @method_decorator(csrf_exempt, name="dispatch")
-class AuthViewSet(viewsets.ViewSet):
-
-    
-
+class AuthViewSet(viewsets.ViewSet):    
     @action(detail=False, methods=['post'])
     def login(self, request):
         username = request.data.get('username')
@@ -79,4 +102,14 @@ class AuthViewSet(viewsets.ViewSet):
 
         serializer = UserSerializer(request.user)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated])
+    def search_users(self, request):
+        """Search for users by username"""
+        username = request.query_params.get('username', None)
+        if username:
+            users = User.objects.filter(username__icontains=username)[:5]
+            serializer = UserSerializer(users, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response({"error": "No username provided"}, status=status.HTTP_400_BAD_REQUEST)
    
