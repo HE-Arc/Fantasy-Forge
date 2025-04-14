@@ -27,14 +27,14 @@ class CharacterViewSet(viewsets.ModelViewSet):
     
     @action(detail=True, methods=['post'], permission_classes=[IsAuthenticated])
     def add_ownership(self, request, pk=None):
-        """Add ownership of a character to a specified user or the logged-in user"""
+        """Add ownership of a character to a specified user by username or the logged-in user"""
         try:
             character = self.get_object()
 
-            owner_id = request.data.get("owner_id")
-            if owner_id:
+            owner_name = request.data.get("owner_name")
+            if owner_name:
                 try:
-                    user = User.objects.get(pk=owner_id)
+                    user = User.objects.get(username=owner_name)
                 except User.DoesNotExist:
                     return Response({"error": "User not found"}, status=404)
             else:
@@ -102,4 +102,14 @@ class AuthViewSet(viewsets.ViewSet):
 
         serializer = UserSerializer(request.user)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated])
+    def search_users(self, request):
+        """Search for users by username"""
+        username = request.query_params.get('username', None)
+        if username:
+            users = User.objects.filter(username__icontains=username)[:5]
+            serializer = UserSerializer(users, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response({"error": "No username provided"}, status=status.HTTP_400_BAD_REQUEST)
    

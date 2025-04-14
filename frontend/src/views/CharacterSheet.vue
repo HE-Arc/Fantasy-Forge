@@ -16,7 +16,9 @@ const charisma_stat = ref(0);
 const characterId = ref(null);
 const char_biography = ref('');
 const showAlert = ref(false);
-const newOwnerId = ref('');
+const newOwnerName = ref('');
+const activeIndex = ref(-1);
+const filteredUsers = ref([]);
 
 // Fetch character data for editing
 const route = useRoute();
@@ -62,7 +64,7 @@ const fetchCharacter = async () => {
 };
 
 const addOwner = async () => {
-  if (!newOwnerId.value || !characterId.value) return;
+  if (!newOwnerName.value || !characterId.value) return;
 
   try {
     const token = localStorage.getItem("access");
@@ -79,7 +81,7 @@ const addOwner = async () => {
     };
 
     const payload = {
-      owner_id: newOwnerId.value,
+      owner_name: newOwnerName.value,
     };
 
     await axios.post(`/api/characters/${characterId.value}/add_ownership/`, payload, config);
@@ -90,7 +92,7 @@ const addOwner = async () => {
       showAlert.value = false;
     }, 5000);
 
-    newOwnerId.value = ''; 
+    newOwnerName.value = ''; 
 
   } catch (error) {
     console.error(error);
@@ -139,6 +141,62 @@ const saveChanges = async () => {
   }
 };
 
+// handle user search
+
+const searchUsers = async () => {
+  if (!newOwnerName.value) {
+    filteredUsers.value = [];
+    return;
+  }
+
+  try {
+    const token = localStorage.getItem("access");
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const response = await axios.get(`/api/auth/search_users/?username=${newOwnerName.value}`, config);
+
+    filteredUsers.value = response.data;
+    activeIndex.value = -1;
+
+  } catch (error) {
+    console.error("Error searching users:", error);
+  }
+};
+
+const selectUser = (user) => {
+  newOwnerName.value = user.username;
+  filteredUsers.value = [];
+};
+
+const moveDown = () => {
+  if (filteredUsers.value.length === 0) return;
+  activeIndex.value = (activeIndex.value + 1) % filteredUsers.value.length;
+};
+
+const moveUp = () => {
+  if (filteredUsers.value.length === 0) return;
+  activeIndex.value = (activeIndex.value - 1 + filteredUsers.value.length) % filteredUsers.value.length;
+};
+
+const selectActive = () => {
+  if (activeIndex.value >= 0 && activeIndex.value < filteredUsers.value.length) {
+    selectUser(filteredUsers.value[activeIndex.value]);
+  }
+};
+
+const clearSuggestions = () => {
+  setTimeout(() => {
+    filteredUsers.value = [];
+    activeIndex.value = -1;
+  }, 150);
+};
+
+
 </script>
 
 <template>
@@ -153,17 +211,47 @@ const saveChanges = async () => {
 
 <div class="container mx-auto px-2 py-4">
 
-  <div style="text-align: right;">
-    <form @submit.prevent="addOwner">
-      <!-- TODO search among users via SearchElement? -->
-      <input type="text" v-model="newOwnerId" placeholder="Owner id" required />
-      <button type="submit" class="ff-button" @click="addOwner">Add owner</button>
-    </form>
-  </div>
-
-  <div style="align-content: right;">
+  <div class="flex justify-between mb-4">
+    <div style="align-content: left;">
     <button type="submit" @click="saveChanges" class="ff-button">Save changes</button>
   </div>
+  <form @submit.prevent="addOwner" class="relative flex items-start gap-2 w-full max-w-xl">
+    <div class="relative flex-1">
+      <input
+        type="text"
+        v-model="newOwnerName"
+        @input="searchUsers"
+        @keydown.down.prevent="moveDown"
+        @keydown.up.prevent="moveUp"
+        @keydown.enter.prevent="selectActive"
+        @blur="clearSuggestions"
+        placeholder="Owner username"
+        required
+        class="w-full px-3 py-2 border rounded"
+      />
+
+      <ul
+        v-if="filteredUsers.length"
+        class="absolute z-50 w-full border border-gray-300 rounded shadow-md bg-white max-h-60 overflow-auto"
+      >
+        <li
+          v-for="(user, index) in filteredUsers"
+          :key="user.id"
+          @click="selectUser(user)"
+          :class="[
+            'px-3 py-2 cursor-pointer hover:bg-gray-100',
+            index === activeIndex ? 'bg-blue-500 text-white' : ''
+          ]"
+        >
+          {{ user.username }}
+        </li>
+      </ul>
+    </div>
+
+    <button type="submit" class="ff-button">Add owner</button>
+  </form>
+</div>
+
 
     <div class="charsheet">
     <div class="sheet-grid-section">
