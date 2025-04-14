@@ -16,6 +16,7 @@ const charisma_stat = ref(0);
 const characterId = ref(null);
 const char_biography = ref('');
 const showAlert = ref(false);
+const newOwnerId = ref('');
 
 // Fetch character data for editing
 const route = useRoute();
@@ -55,6 +56,42 @@ const fetchCharacter = async () => {
     wisdom_stat.value = response.data.wisdom;
     charisma_stat.value = response.data.charisma;
     char_biography.value = response.data.biography;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const addOwner = async () => {
+  if (!newOwnerId.value || !characterId.value) return;
+
+  try {
+    const token = localStorage.getItem("access");
+
+    if (!token) {
+      console.error("Missing token, please log in again.");
+      return;
+    }
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    };
+
+    const payload = {
+      owner_id: newOwnerId.value,
+    };
+
+    await axios.post(`/api/characters/${characterId.value}/add_ownership/`, payload, config);
+
+    showAlert.value = true;
+
+    setTimeout(() => {
+      showAlert.value = false;
+    }, 5000);
+
+    newOwnerId.value = ''; 
+
   } catch (error) {
     console.error(error);
   }
@@ -116,17 +153,17 @@ const saveChanges = async () => {
 
 <div class="container mx-auto px-2 py-4">
 
-<div style="text-align: right;">
-  <form @submit.prevent="addOwner">
-    <!-- TODO search among users via SearchElement? -->
-      <input type="text" placeholder="Owner id" required />
-      <button type="submit" class="ff-button">Add owner</button>
+  <div style="text-align: right;">
+    <form @submit.prevent="addOwner">
+      <!-- TODO search among users via SearchElement? -->
+      <input type="text" v-model="newOwnerId" placeholder="Owner id" required />
+      <button type="submit" class="ff-button" @click="addOwner">Add owner</button>
     </form>
   </div>
 
-    <div style="align-content: right;">
+  <div style="align-content: right;">
     <button type="submit" @click="saveChanges" class="ff-button">Save changes</button>
-    </div>
+  </div>
 
     <div class="charsheet">
     <div class="sheet-grid-section">

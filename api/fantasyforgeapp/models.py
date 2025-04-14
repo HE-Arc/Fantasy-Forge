@@ -12,6 +12,7 @@ class Character(models.Model):
     wisdom= models.IntegerField(default=0)
     charisma = models.IntegerField(default=0)
     biography = models.TextField(default="no biography")
+    owners = models.ManyToManyField(User, through='Ownership', related_name='characters')
 
 
 class Ownership(models.Model):

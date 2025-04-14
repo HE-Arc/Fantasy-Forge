@@ -23,16 +23,39 @@ class CharacterViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         """Return only the characters owned by the logged-in user"""
-        return Character.objects.filter(ownership__user=self.request.user)
+        return Character.objects.filter(owners=self.request.user)
+    
+    @action(detail=True, methods=['post'], permission_classes=[IsAuthenticated])
+    def add_ownership(self, request, pk=None):
+        """Add ownership of a character to a specified user or the logged-in user"""
+        try:
+            character = self.get_object()
+
+            owner_id = request.data.get("owner_id")
+            if owner_id:
+                try:
+                    user = User.objects.get(pk=owner_id)
+                except User.DoesNotExist:
+                    return Response({"error": "User not found"}, status=404)
+            else:
+                user = request.user
+
+            if Ownership.objects.filter(user=user, character=character).exists():
+                return Response({"error": "Ownership already exists"}, status=400)
+
+            character.owners.add(user)  # Add the user to the character's owners
+            return Response({"message": f"Ownership added for user {user.username}"}, status=201)
+
+        except Character.DoesNotExist:
+            return Response({"error": "Character not found"}, status=404)
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
 
 
 # credit : https://github.com/HE-Arc/Instagenda/
 
 @method_decorator(csrf_exempt, name="dispatch")
-class AuthViewSet(viewsets.ViewSet):
-
-    
-
+class AuthViewSet(viewsets.ViewSet):    
     @action(detail=False, methods=['post'])
     def login(self, request):
         username = request.data.get('username')
