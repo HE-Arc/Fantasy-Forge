@@ -3,6 +3,7 @@ import axios from "axios";
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from 'vue-router';
 import NumberInput from '@/components/functional/NumberInput.vue';
+import FeatureNotImplemented from "@/components/functional/FeatureNotImplemented.vue";
 import { resolveComponent } from "vue";
 
 // State variables
@@ -105,6 +106,7 @@ const saveChanges = async () => {
 </script>
 
 <template>
+
 <v-alert
   v-if="showAlert"
   color="success"
@@ -136,6 +138,7 @@ const saveChanges = async () => {
   </div>
   <div class="sheet-class sheet-block">
     <span>Class</span>
+    <FeatureNotImplemented></FeatureNotImplemented>
   </div>
   <div class="sheet-stat sheet-block">
     <div><NumberInput
@@ -164,10 +167,8 @@ const saveChanges = async () => {
     ></NumberInput></span>
   </div>
   <div class="sheet-skills sheet-block">
-    <h3>Skills</h3>
-    <label><button name="roll_str" value="/r 1d6+@{str}" type="roll"></button> acrobatics <input type="number" name="attr_str"></label>
-    <label><button name="roll_agi" value="/r 1d6+@{agi}" type="roll"></button> history <input type="number" name="attr_agi"></label>
-    <label><button name="roll_mind" value="/r 1d6+@{mind}" type="roll"></button> animal handling <input type="number" name="attr_mind"></label>
+    <div style="font-weight: 700; font-size: 1rem;">Skills</div>
+    <FeatureNotImplemented></FeatureNotImplemented>
   </div>
   <div class="sheet-bio sheet-block">
     <v-textarea
@@ -182,20 +183,18 @@ const saveChanges = async () => {
     ></v-textarea>
   </div>
   <div class="sheet-notes sheet-block">
-    <h3>Notes (logs)</h3>
-    <span>TODO : list</span>
-    <div style="align-content: right;">
+    <h3 style="font-weight: 700; font-size: 1rem;">Notes (logs)</h3>
+    <FeatureNotImplemented></FeatureNotImplemented>
+    <div style="align-content: right; font-size: 1rem;">
 
     <a class="px-4 py-2.5 text-red-700 hover:text-red-100 rounded dark:text-gray-900 " href="">View all logs</a>
   </div>
   </div>
 </div>
 </div>
-
-
 </div>
 
-
 </template>
+
 
 

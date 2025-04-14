@@ -44,6 +44,7 @@ min nad max are optional, to define limits of the changer
 <style scoped>
 
 .value-control {
+  justify-content: center;
   margin: 0 0.1rem;
   padding: 0.5rem;
   background: transparent;
@@ -68,6 +69,7 @@ min nad max are optional, to define limits of the changer
 }
 
 .value-input {
+  justify-content: center;
   margin: 0;
   width: 35%;
   border: 0.3rem double red;
