@@ -12,32 +12,31 @@ const isMenuOpen = ref(false);
 
 <template>
   <div class="bg-gray-100 text-white">
-    <div class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 w-full">
+    <div class="bg-white border-b border-gray-100 w-full">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
           <!-- Logo (Left) -->
           <div class="flex-shrink-0">
-            <img src="@/assets/logo-app.svg" alt="App Logo" class="h-8 w-auto block dark:hidden" />
-            <img src="@/assets/logo-app-dark.svg" alt="App Logo Dark" class="h-8 w-auto hidden dark:block" />
+            <img src="@/assets/logo-app.svg" alt="App Logo" class="h-8 w-auto block" />
           </div>
 
           <!-- Desktop Navigation (Centered) -->
           <div class="hidden md:flex flex-1 justify-center">
             <ul class="flex space-x-8">
               <li>
-                <router-link :to="{ name: 'characters' }" class="text-gray-900 dark:text-gray-100 inline-block py-2 px-4 text-sm font-medium">
+                <router-link :to="{ name: 'characters' }" class="text-gray-900 inline-block py-2 px-4 text-sm font-medium">
                   <IconCharacter class="inline-block" />
                   Characters
                 </router-link>
               </li>
               <li>
-                <router-link :to="{ name: 'rules', params: {name: ''} }" class="text-gray-900 dark:text-gray-100 inline-block py-2 px-4 text-sm font-medium">
+                <router-link :to="{ name: 'rules', params: {name: ''} }" class="text-gray-900 inline-block py-2 px-4 text-sm font-medium">
                   <IconRules class="inline-block" />
                   Rules
                 </router-link>
               </li>
               <li>
-                <router-link :to="{ name: 'about' }" class="text-gray-900 dark:text-gray-100 inline-block py-2 px-4 text-sm font-medium">
+                <router-link :to="{ name: 'about' }" class="text-gray-900 inline-block py-2 px-4 text-sm font-medium">
                   <IconAbout class="inline-block" />
                   About
                 </router-link>
@@ -51,22 +50,22 @@ const isMenuOpen = ref(false);
           </div>
 
           <!-- Mobile Menu Button (Right) -->
-          <button class="md:hidden text-gray-900 dark:text-gray-100 focus:outline-none" @click="isMenuOpen = !isMenuOpen">
+          <button class="md:hidden text-gray-900 focus:outline-none" @click="isMenuOpen = !isMenuOpen">
             <IconMobileMenu />
           </button>
         </div>
 
         <!-- Mobile Menu (Hidden by Default) -->
-        <div v-if="isMenuOpen" class="md:hidden mt-2 space-y-2 bg-white dark:bg-gray-800 p-4 rounded-lg">
-          <router-link :to="{ name: 'characters' }" class="block text-gray-900 dark:text-gray-100 py-2 px-4 text-sm font-medium" @click="isMenuOpen = false">
+        <div v-if="isMenuOpen" class="md:hidden mt-2 space-y-2 bg-white p-4 rounded-lg">
+          <router-link :to="{ name: 'characters' }" class="block text-gray-900 py-2 px-4 text-sm font-medium" @click="isMenuOpen = false">
             <IconCharacter class="inline-block" />
             Characters
           </router-link>
-          <router-link :to="{ name: 'rules', params: {name: ''} }" class="block text-gray-900 dark:text-gray-100 py-2 px-4 text-sm font-medium" @click="isMenuOpen = false">
+          <router-link :to="{ name: 'rules', params: {name: ''} }" class="block text-gray-900 py-2 px-4 text-sm font-medium" @click="isMenuOpen = false">
             <IconRules class="inline-block" />
             Rules
           </router-link>
-          <router-link :to="{ name: 'about' }" class="block text-gray-900 dark:text-gray-100 py-2 px-4 text-sm font-medium" @click="isMenuOpen = false">
+          <router-link :to="{ name: 'about' }" class="block text-gray-900 py-2 px-4 text-sm font-medium" @click="isMenuOpen = false">
             <IconAbout class="inline-block" />
             About
           </router-link>

@@ -32,13 +32,13 @@ async function handleLogout() {
 
 <template>
   <div v-if="!isAuthenticated">
-    <router-link :to="{ name: 'login' }" class="block text-gray-900 dark:text-gray-100 py-2 px-4 text-sm font-medium" @click="updateMenuState(false)">
+    <router-link :to="{ name: 'login' }" class="block text-gray-900 py-2 px-4 text-sm font-medium" @click="updateMenuState(false)">
       <IconLogin class="inline-block" />
       {{ text }}
     </router-link>
   </div>
   <div v-else>
-    <router-link to="#" @click.prevent="handleLogout" class="block text-gray-900 dark:text-gray-100 py-2 px-4 text-sm font-medium" @click="updateMenuState(false)">
+    <router-link to="#" @click.prevent="handleLogout" class="block text-gray-900 py-2 px-4 text-sm font-medium" @click="updateMenuState(false)">
       <IconLogout class="inline-block" />
       {{ text }}
     </router-link>

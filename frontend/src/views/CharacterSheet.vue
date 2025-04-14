@@ -186,7 +186,7 @@ const saveChanges = async () => {
     <span>TODO : list</span>
     <div style="align-content: right;">
 
-    <a class="px-4 py-2.5 text-red-700 hover:text-red-100 rounded dark:text-gray-900 " href="">View all logs</a>
+    <a class="px-4 py-2.5 text-red-700 hover:text-red-100 rounded" href="">View all logs</a>
   </div>
   </div>
 </div>
