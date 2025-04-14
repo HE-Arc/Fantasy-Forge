@@ -28,12 +28,16 @@ Inspiration: https://wiki.roll20.net/Designing_Character_Sheet_Layout
   .charsheet div.sheet-class{
     grid-area: class;
     background-color:rgb(255, 213, 218);
+    font-size:1rem;
   }
   .charsheet div.sheet-stat{
     grid-area: stat;
   }
   .charsheet div.sheet-skills{
     grid-area: skills;
+    background-color:rgb(228, 228, 228);
+    color: #828282;
+    font-size: 3em;
   }
   .charsheet div.sheet-bio{
     padding: 2% !important;
@@ -42,5 +46,8 @@ Inspiration: https://wiki.roll20.net/Designing_Character_Sheet_Layout
   }
   .charsheet div.sheet-notes{
     grid-area: notes;
+    background-color:rgb(228, 228, 228);
+    color: #828282;
+    font-size: 2.5em;
   }
 }
