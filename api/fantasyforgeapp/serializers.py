@@ -40,9 +40,11 @@ class CharacterSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(required=True)
+
     class Meta:
         model = User
-        fields = ['id', 'username', 'password']
+        fields = ['id', 'username', 'email', 'password']
         extra_kwargs = {'password': {'write_only': True}}
 
     def validate_password(self, value):
@@ -50,14 +52,26 @@ class UserSerializer(serializers.ModelSerializer):
         Validate password against Django's password validators.
         """
         try:
-            validate_password(value)  
+            validate_password(value)
         except ValidationError as e:
-            raise serializers.ValidationError(e.messages)  
+            raise serializers.ValidationError(e.messages)
+        return value
+
+    def validate_email(self, value):
+        """
+        Validate email format.
+        """
+        if not value or "@" not in value:
+            raise serializers.ValidationError("Invalid email format.")
+        if User.objects.filter(email=value).exists():
+            raise serializers.ValidationError("Email is already in use.")
+        if len(value) > 254:
+            raise serializers.ValidationError("Email address is too long.")
         return value
 
     def create(self, validated_data):
-        password = validated_data.pop('password') 
-        user = User(**validated_data) 
+        password = validated_data.pop('password')
+        user = User(**validated_data)
         user.set_password(password)
         user.save()
         return user
