@@ -12,7 +12,3 @@ def generate_ability_scores():
 
 def get_modifier(ability):
     return (ability - 10) // 2
-
-scores = generate_ability_scores()
-for score in scores:
-    print(f'{score} ({get_modifier(score)})')
