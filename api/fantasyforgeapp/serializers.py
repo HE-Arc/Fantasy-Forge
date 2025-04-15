@@ -14,6 +14,7 @@ class CharacterSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "name",
+            "job",
             "strength",
             "constitution",
             "dexterity",
@@ -23,6 +24,24 @@ class CharacterSerializer(serializers.ModelSerializer):
             "biography",
             "owners"
         ]
+        
+    def validate(self, data):
+        """
+        Validate that the character name is unique for the user.
+        """
+        strength = data.get("strength")
+        constitution = data.get("constitution")
+        dexterity = data.get("dexterity")
+        intelligence = data.get("intelligence")
+        wisdom = data.get("wisdom")
+        charisma = data.get("charisma")
+        stats = [strength, constitution, dexterity, intelligence, wisdom, charisma]
+        
+        for stat in stats:
+            if stat is not None and (stat < 0 or stat > 99):
+                raise serializers.ValidationError(f"Stats must be between 0 and 99.")
+            
+        return data
 
     def get_owners(self, obj):
         """Return a list of usernames who own the character"""

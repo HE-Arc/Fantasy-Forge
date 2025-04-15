@@ -4,7 +4,23 @@ from django.contrib.auth.models import User
 
 
 class Character(models.Model):
+    CLASS_CHOICES = [
+        ('Barbarian', 'Barbarian'),
+        ('Bard', 'Bard'),
+        ('Cleric', 'Cleric'),
+        ('Druid', 'Druid'),
+        ('Fighter', 'Fighter'),
+        ('Monk', 'Monk'),
+        ('Paladin', 'Paladin'),
+        ('Ranger', 'Ranger'),
+        ('Rogue', 'Rogue'),
+        ('Sorcerer', 'Sorcerer'),
+        ('Warlock', 'Warlock'),
+        ('Wizard', 'Wizard'),
+    ]
+    
     name = models.CharField(max_length=100)
+    job = models.CharField(max_length=20, choices=CLASS_CHOICES, default='Barbarian')
     strength = models.IntegerField(default=0)
     constitution= models.IntegerField(default=0)
     dexterity= models.IntegerField(default=0)

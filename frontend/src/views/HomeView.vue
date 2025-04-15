@@ -7,14 +7,11 @@ import IconEdit from "@/components/icons/IconEdit.vue";
 
 const characters = ref([]);
 const isAuthenticated = ref(!!localStorage.getItem("access"));
-console.log(isAuthenticated.value);
 
 const fetchCharacters = async () => {
   try {
 
     const token = localStorage.getItem("access");
-
-    console.log(token);
 
     if (!token) {
       console.error("Missing token, please log in again.");
@@ -28,7 +25,6 @@ const fetchCharacters = async () => {
     };
 
     const res = await axios.get("/api/characters/", config).then(response => {
-    console.log(response.data);
     characters.value = response.data;
   });
 
@@ -46,7 +42,7 @@ onMounted(() => {
 const deleteCharacter = async (id) => {
   const confirmDelete = confirm("Are you sure you want to delete this character?");
   if (!confirmDelete) return;
-  
+
   try {
     const token = localStorage.getItem("access");
 
@@ -68,6 +64,7 @@ const deleteCharacter = async (id) => {
   }
 };
 
+
 </script>
 <template>
   <div>
@@ -83,7 +80,15 @@ const deleteCharacter = async (id) => {
     </div>
     <ul class="list-none p-0">
       <li v-for="character in characters" :key="character.id" class="p-2 border-b border-gray-300 flex justify-between items-center">
-        <span>{{ character.name }}</span>
+        <span>
+          {{ character.job }} <strong>{{ character.name }}</strong> |
+          Strength: {{ character.strength }} |
+          Dexterity: {{ character.dexterity }} |
+          Constitution: {{ character.constitution }} |
+          Intelligence: {{ character.intelligence }} |
+          Wisdom: {{ character.wisdom }} |
+          Charisma: {{ character.charisma }} |
+        </span>
         <div>
             <router-link :to="{ name: 'character-edit', params: { id: character.id } }">
               <IconEdit></IconEdit>

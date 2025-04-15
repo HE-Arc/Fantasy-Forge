@@ -20,6 +20,22 @@ const showAlert = ref(false);
 const newOwnerName = ref('');
 const activeIndex = ref(-1);
 const filteredUsers = ref([]);
+const selectedClass = ref('');
+const availableClasses = ref([
+  "Barbarian",
+  "Bard",
+  "Cleric",
+  "Druid",
+  "Fighter",
+  "Monk",
+  "Paladin",
+  "Ranger",
+  "Rogue",
+  "Sorcerer",
+  "Warlock",
+  "Wizard",
+]);
+const generatedStats = ref([]);
 
 // Fetch character data for editing
 const route = useRoute();
@@ -37,8 +53,6 @@ const fetchCharacter = async () => {
 
     const token = localStorage.getItem("access");
 
-    console.log(token);
-
     if (!token) {
       console.error("Missing token, please log in again.");
       return;
@@ -52,6 +66,7 @@ const fetchCharacter = async () => {
 
     const response = await axios.get(`/api/characters/${characterId.value}/`, config);
     char_name.value = response.data.name; // Pre-fill the form with the existing data
+    selectedClass.value = response.data.job;
     strength_stat.value = response.data.strength;
     dexterity_stat.value = response.data.dexterity;
     constitution_stat.value = response.data.constitution;
@@ -93,7 +108,7 @@ const addOwner = async () => {
       showAlert.value = false;
     }, 5000);
 
-    newOwnerName.value = ''; 
+    newOwnerName.value = '';
 
   } catch (error) {
     console.error(error);
@@ -118,6 +133,7 @@ const saveChanges = async () => {
     };
 
     const payload = {
+      job: selectedClass.value,
       strength: strength_stat.value,
       dexterity: dexterity_stat.value,
       constitution: constitution_stat.value,
@@ -127,7 +143,14 @@ const saveChanges = async () => {
       biography: char_biography.value,
     };
 
-    await axios.patch(`/api/characters/${characterId.value}/`, payload, config);
+    await axios.patch(`/api/characters/${characterId.value}/`, payload, config)
+    .then((response) => {
+      console.log("Character updated successfully:", response.data);
+    })
+    .catch((error) => {
+      console.error("Error updating character:", error.response ? error.response.data : error.message);
+    });
+
 
     // show alert about successfull edit
     showAlert.value = true;
@@ -197,6 +220,21 @@ const clearSuggestions = () => {
   }, 150);
 };
 
+const fetchGeneratedStats = async () => {
+  try {
+    const token = localStorage.getItem("access");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    };
+
+    const response = await axios.get("/api/generate-stats/", config);
+    generatedStats.value = response.data.ability_scores;
+  } catch (error) {
+    console.error("Error fetching generated stats:", error);
+  }
+};
 
 </script>
 
@@ -217,6 +255,15 @@ const clearSuggestions = () => {
     <div style="align-content: left;">
     <button type="submit" @click="saveChanges" class="ff-button">Save changes</button>
   </div>
+  <div class="flex justify-between mb-4">
+    <button @click="fetchGeneratedStats" class="ff-button">
+      🎲 Generate Random Stats
+    </button>
+  </div>
+
+<div v-if="generatedStats.length" class="mb-4 flex items-center justify-center text-red-900 text-lg font-bold">
+  <div>[ {{ generatedStats.join(' | ') }} ]</div>
+</div>
   <form @submit.prevent="addOwner" class="relative flex items-start gap-2 w-full max-w-xl">
     <div class="relative flex-1">
       <input
@@ -261,9 +308,16 @@ const clearSuggestions = () => {
     <label>Name</label>
     <div style="font-weight: 700;">{{char_name}}</div>
   </div>
-  <div class="sheet-class sheet-block">
-    <span>Class</span>
-    <FeatureNotImplemented></FeatureNotImplemented>
+  <div class="sheet-class sheet-block d-flex items-center">
+    <label for="class-select" class="mr-4 ml-4">Class</label>
+    <div class="flex items-center h-full">
+      <v-select
+      id="class-select"
+      v-model="selectedClass"
+      :items="availableClasses"
+      style="max-height: 40px; font-size: 0.875rem; line-height: 1.25rem; display: flex; align-items: center;"
+      />
+    </div>
   </div>
   <div class="sheet-stat sheet-block">
     <div><NumberInput
