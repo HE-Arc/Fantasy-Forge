@@ -14,41 +14,25 @@ min nad max are optional, to define limits of the changer
 
 <template>
   <div style="text-align: center;">
-  <div style="text-align:center; text-decoration: overline; font-style: oblique; font-weight: 600;">{{ name }}</div>
-  <button
-  class="value-control"
-  @click = "stepDown"
-  title="Decrease value"
-  aria-label="Decrease value">-</button>
+    <div style="text-align:center; font-style: oblique; font-weight: 600;">{{ name }}</div>
+    <button class="value-control" @click="stepDown" title="Decrease value" aria-label="Decrease value">-</button>
 
-<input
-  class="value-input"
-  type="number"
-  v-model="inputValue"
-  name="numberInput"
-  :min = "min"
-  :max = "max"
-  @input="onInput"
-  ref = "inputRef"
-  id="numberInput" readonly>
+    <input class="value-input" type="number" v-model="inputValue" name="numberInput" :min="min" :max="max"
+      @input="onInput" ref="inputRef" id="numberInput">
 
-<button
-  class="value-control"
-  @click="stepUp"
-  title="Increase value"
-  aria-label="Increase value">+</button>
-</div>
+    <button class="value-control" @click="stepUp" title="Increase value" aria-label="Increase value">+</button>
+  </div>
 
 </template>
 
 <style scoped>
-
 .value-control {
   justify-content: center;
   margin: 0 0.1rem;
   padding: 0.5rem;
   background: transparent;
-  border: 0.1rem solid #817474;;
+  border: 0.1rem solid #817474;
+  ;
   border-radius: 0.3rem;
   color: #6c5c5c;
   cursor: pointer;
@@ -81,6 +65,18 @@ min nad max are optional, to define limits of the changer
 .value-input:hover {
   border-color: #777;
 }
+
+/* Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
 </style>
 
 <script>
@@ -92,7 +88,7 @@ export default {
     },
     max: {
       type: Number,
-      default: 10, // Default max value
+      default: 99, // Default max value
     },
     value: {
       type: Number,
@@ -118,6 +114,15 @@ export default {
     }
   },
   methods: {
+    onInput(event) {
+      let value = Number(event.target.value);
+      if (isNaN(value)) value = this.min;
+
+      if (value < this.min) value = this.min;
+      if (value > this.max) value = this.max;
+
+      this.inputValue = value;
+    },
     stepUp() {
       const input = this.$refs.inputRef;
       if (input && typeof input.stepUp === 'function') {

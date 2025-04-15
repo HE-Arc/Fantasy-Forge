@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from "vue";
+import { ref, watchEffect } from "vue";
 import { useRouter } from "vue-router";
 import { logout } from "../../auth.js";
 import IconLogout from "../icons/IconLogout.vue";
@@ -11,7 +11,7 @@ const isAuthenticated = ref(!!localStorage.getItem("access"));
 const text = ref("Login");
 
 // Watch for changes to localStorage and update isAuthenticated
-watch(() => {
+watchEffect(() => {
   isAuthenticated.value = !!localStorage.getItem("access");
   text.value = isAuthenticated.value ? "Logout" : "Login";
 });

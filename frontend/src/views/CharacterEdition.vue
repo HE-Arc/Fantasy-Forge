@@ -38,7 +38,6 @@ const submitForm = async () => {
   try {
 
     const token = localStorage.getItem("access");
-    console.log(token);
 
     // Include the token in the headers for authentication
     const config = {
@@ -49,7 +48,7 @@ const submitForm = async () => {
 
     if (isEdit.value) {
       // PUT request for editing an existing character
-      const response = await axios.put(`/api/characters/${characterId.value}/`, { name: name.value }, config); // here TODO ??
+      const response = await axios.put(`/api/characters/${characterId.value}/`, { name: name.value }, config);
       message.value = `Character "${response.data.name}" updated successfully!`;
     } else {
       // for connection with user-creator later
