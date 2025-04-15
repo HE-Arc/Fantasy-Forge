@@ -11,7 +11,7 @@ Le but est de créer une application web de gestion de parties DnD utilisant le 
 
 ## Installer le projet en local
 1. Cloner le répertoire git
-2. Créer un fichier .env et le configurer comme il se doit. Plusieurs fichier .env seront nécessaires, un à la racine du dossier `api` pour la base de données postgres (à créer en local si pas déjà fait), l'autre à la racine de `frontend`.
+2. Créer un fichier .env et le configurer comme il se doit. Plusieurs fichiers .env seront nécessaires, un à la racine du dossier `api` pour la base de données postgres (à créer en local si c'est pas déjà fait), l'autre à la racine de `frontend`.
 Voici un exemple de configuration:
     - `api`
       
@@ -42,7 +42,7 @@ Voici un exemple de configuration:
      python manage.py runserver
      ```
 6. Vérifier si Django marche en allant à l'URL suivant: http://localhost:8000/
-7. Aller dans `frontend`, installer les dépendances Vue.js puis faire tourner la partie frontend en mode dev
+7. Aller dans `frontend`, installer les dépendances Vue.js, puis faire tourner la partie frontend en mode dev
     ```
     npm install
     npm run dev
