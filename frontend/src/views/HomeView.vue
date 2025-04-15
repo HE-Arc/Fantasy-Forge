@@ -44,13 +44,30 @@ onMounted(() => {
 });
 
 const deleteCharacter = async (id) => {
+  const confirmDelete = confirm("Are you sure you want to delete this character?");
+  if (!confirmDelete) return;
+  
   try {
-    await axios.delete(`/api/characters/${id}/`);
+    const token = localStorage.getItem("access");
+
+    if (!token) {
+      console.error("Missing token, please log in again.");
+      return;
+    }
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    };
+
+    await axios.delete(`/api/characters/${id}/`, config);
     characters.value = characters.value.filter(character => character.id !== id);
   } catch (error) {
     console.error("Error deleting character:", error);
   }
 };
+
 </script>
 <template>
   <div>
@@ -72,7 +89,7 @@ const deleteCharacter = async (id) => {
               <IconEdit></IconEdit>
             </router-link>
             <button @click="deleteCharacter(character.id)">
-              <router-link :to="{ name: 'characters' }"><IconTrashcan></IconTrashcan></router-link>
+              <IconTrashcan></IconTrashcan>
             </button>
         </div>
       </li>
