@@ -251,20 +251,22 @@ const fetchGeneratedStats = async () => {
 
 <div class="container mx-auto px-2 py-4">
 
-  <div class="flex justify-between mb-4">
-    <div style="align-content: left;">
-    <button type="submit" @click="saveChanges" class="ff-button">Save changes</button>
-  </div>
-  <div class="flex justify-between mb-4">
-    <button @click="fetchGeneratedStats" class="ff-button">
-      🎲 Generate Random Stats
-    </button>
-  </div>
+  <div class="flex flex-col md:flex-row justify-between mb-4">
+    <div class="mb-4 md:mb-0" style="align-content: left;">
+      <button type="submit" @click="saveChanges" class="ff-button">Save changes</button>
+    </div>
 
-<div v-if="generatedStats.length" class="mb-4 flex items-center justify-center text-red-900 text-lg font-bold">
-  <div>[ {{ generatedStats.join(' | ') }} ]</div>
-</div>
-  <form @submit.prevent="addOwner" class="relative flex items-start gap-2 w-full max-w-xl">
+    <div class="mb-4 md:mb-0">
+      <button @click="fetchGeneratedStats" class="ff-button">
+        🎲 Generate Random Stats
+      </button>
+    </div>
+
+    <div v-if="generatedStats.length" class="flex items-center justify-center text-red-900 text-lg font-bold h-full">
+      <div class="flex items-center justify-center">{{ generatedStats.join(' | ') }}</div>
+    </div>
+
+  <form @submit.prevent="addOwner" class="relative flex flex-col md:flex-row items-start gap-2 w-full max-w-xl">
     <div class="relative flex-1">
       <input
         type="text"
@@ -308,16 +310,16 @@ const fetchGeneratedStats = async () => {
     <label>Name</label>
     <div style="font-weight: 700;">{{char_name}}</div>
   </div>
-  <div class="sheet-class sheet-block d-flex items-center">
-    <label for="class-select" class="mr-4 ml-4">Class</label>
-    <div class="flex items-center h-full">
-      <v-select
-      id="class-select"
-      v-model="selectedClass"
-      :items="availableClasses"
-      style="max-height: 40px; font-size: 0.875rem; line-height: 1.25rem; display: flex; align-items: center;"
-      />
-    </div>
+  <div class="sheet-class sheet-block d-flex">
+      <label for="class-select" class="flex-shrink-0 mr-4 items-center">Class</label>
+      <div class="flex-grow">
+        <v-select
+          id="class-select"
+          v-model="selectedClass"
+          :items="availableClasses"
+          class="w-full"
+        />
+      </div>
   </div>
   <div class="sheet-stat sheet-block">
     <div><NumberInput

@@ -81,13 +81,12 @@ const deleteCharacter = async (id) => {
     <ul class="list-none p-0">
       <li v-for="character in characters" :key="character.id" class="p-2 border-b border-gray-300 flex justify-between items-center">
         <span>
-          {{ character.job }} <strong>{{ character.name }}</strong> |
-          Strength: {{ character.strength }} |
-          Dexterity: {{ character.dexterity }} |
-          Constitution: {{ character.constitution }} |
-          Intelligence: {{ character.intelligence }} |
-          Wisdom: {{ character.wisdom }} |
-          Charisma: {{ character.charisma }} |
+          <div>
+            <strong>{{ character.name }}</strong> | Class: {{ character.job }}
+          </div>
+          <div>
+            Strength: {{ character.strength }} | Dexterity: {{ character.dexterity }} | Constitution: {{ character.constitution }} | Intelligence: {{ character.intelligence }} | Wisdom: {{ character.wisdom }} | Charisma: {{ character.charisma }}
+          </div>
         </span>
         <div>
             <router-link :to="{ name: 'character-edit', params: { id: character.id } }">

@@ -2,16 +2,21 @@
   import { ref } from 'vue'
 
   const dialog = ref(false)
+  const isMobile = ref(window.innerWidth <= 768)
+
+  window.addEventListener('resize', () => {
+    isMobile.value = window.innerWidth <= 768
+  })
 </script>
 
 <template>
   <div class="text-center">
-    <div class="icon-row" style="width: 100%;">
+    <div class="icon-row" :style="{ flexDirection: isMobile ? 'column' : 'row', width: '100%' }">
       <v-icon class="icon" icon="mdi-hammer-wrench"></v-icon>
       <v-icon class="icon" icon="mdi-account-hard-hat"></v-icon>
       <v-btn :icon="true" @click="dialog = true" class="info-btn" variant="plain"
       :ripple="false">
-        <v-icon icon="mdi-information-slab-circle-outline"></v-icon>
+      <v-icon icon="mdi-information-slab-circle-outline"></v-icon>
       </v-btn>
     </div>
 
