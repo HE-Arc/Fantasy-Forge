@@ -213,6 +213,17 @@ const selectActive = () => {
   }
 };
 
+const handleEnter = () => {
+  if (filteredUsers.value.length > 0 && activeIndex.value >= 0) {
+    // If an item is selected, select it
+    selectActive();
+  } else {
+    // If no item is selected, add the owner (so either item has been selected or user has been added manually)
+    addOwner();
+  }
+};
+
+
 const clearSuggestions = () => {
   setTimeout(() => {
     filteredUsers.value = [];
@@ -274,7 +285,7 @@ const fetchGeneratedStats = async () => {
         @input="searchUsers"
         @keydown.down.prevent="moveDown"
         @keydown.up.prevent="moveUp"
-        @keydown.enter.prevent="selectActive"
+        @keydown.enter.prevent="handleEnter"
         @blur="clearSuggestions"
         placeholder="Owner username"
         required
